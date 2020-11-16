@@ -20,4 +20,4 @@ mtAll = mtAll.filter_entries( (mtAll.GQ>=20) &
                         (mtAll.GT.is_het() & (mtAll.AB >= 0.25) & (mtAll.AB <= 0.75)) |
                         (mtAll.GT.is_hom_var() & (mtAll.AB >= 0.9))))
                         
-hl.export_vcf(mtAll, '/path/to/sequence.file.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz')
+hl.export_vcf(mtAll, '/path/to/sequence.file.GTflt.AB.noChrXYM.vcf.gz')
