@@ -9,9 +9,3 @@ bcftools norm -m -any --check-ref w -f /path/to/GCA_000001405.15_GRCh38_no_alt_a
 tabix -p vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz
 
 
-#Obtain the list of variants for ancestry inference PCA (used later in ancestry ascertainment)
-for chr in {1..22}; do
-  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | \
-  bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
-done
-
