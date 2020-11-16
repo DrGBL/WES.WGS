@@ -17,9 +17,9 @@ Here's a summary of what each function does, with more comments in each specific
 
 02.hail.py: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
 
-03.reheader.py: advanced hail functions did not work on our local cluster, so the rest of our analysis was done on regular vcf. This function reheaders the meta-data the vcf obtained from the hail QC. It will require some local tweaking.
+03.reheader.sh: advanced hail functions did not work on our local cluster, so the rest of our analysis was done on regular vcf. This function reheaders the meta-data the vcf obtained from the hail QC. It will require some local tweaking.
 
-04.norm.ID: normalizes and left aligns variants. Also obtains the the list of all variants in the cohort, to be used later by other functions.
+04.norm.ID.sh: normalizes and left aligns variants. Also obtains the the list of all variants in the cohort, to be used later by other functions.
 
 05.ancestryPCA.sh: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
