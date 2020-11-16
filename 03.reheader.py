@@ -2,16 +2,16 @@
 #unfortunately part of this needs to be done by hand. This is slightly annoying, apologies.
 
 #first obtain the header from pre-hail vcf
-bcftools view -h /path/to/sequence.file.noChrXYM.vqsr.flt.vcf.gz > /path/to/header.txt
+bcftools view -h /path/to/sequence.file.noChrXYM.vcf.gz > /path/to/header.txt
 
 #obtain the header from the hail output vcf
-bcftools view -h /path/to/sequence.file.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz > /path/to/postHailHeader.txt
+bcftools view -h /path/to/sequence.file.GTflt.AB.noChrXYM.vcf.gz > /path/to/postHailHeader.txt
 
 #the postHailHeader.txt header will need to be modified manually so that the metadata works
 #e.g. in the postHailHeader you will have: ##FORMAT=<ID=AD,Number=.,Type=Integer,Description="">
 #this needs to be fixed to #FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed"> 
 
 #Once this is done for all relevant lines proceed with the following:
-bcftools reheader -h /path/to/postHailHeader.txt /path/to/sequence.file.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz | \
-  bgzip > /path/to/sequence.file.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
-tabix -p vcf /path/to/sequence.file.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
+bcftools reheader -h /path/to/postHailHeader.txt /path/to/sequence.file.GTflt.AB.noChrXYM.vcf.gz | \
+  bgzip > /path/to/sequence.file.rehead.GTflt.AB.noChrXYM.vcf.gz
+tabix -p vcf /path/to/sequence.file.rehead.GTflt.AB.noChrXYM.vcf.gz
