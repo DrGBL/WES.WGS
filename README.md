@@ -9,6 +9,8 @@ Every effort was made to prioritize code clarity over efficiency, and there are 
 
 The code is numbered to give the order which it was ran at McGill, however these aren't always necessary, and you can sometimes jump ahead.
 
+Dependencies: bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python module)
+
 Here's a summary of what each function does, with more comments in each specific file:
 
 01.autosomal.sh: keeps only autosomal chromosome, this may not be necessary in your cohort, but the smaller sample size at the BQC-19 caused some trouble with QCing in those regions, so for now we omitted them.
@@ -31,7 +33,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 10.WGS.vcf.to.plink.sh: this transforms the per full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
-11.makeRegenieVCF.sh: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie.
+11.makeRegenieVCF.sh: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie. This function depends on 4 R files: M1.GT.R, M2.GT.R, M3.GT.R, and M4.GT.R.
 
 12.regenieAnalysis.sh: this is where the magic happens with regenie.
 
