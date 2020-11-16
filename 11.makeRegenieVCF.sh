@@ -26,7 +26,7 @@ for i in {1..22}; do cat headerStep1.txt /M1/finalMask/M1.chr${i}.txt > /M1/fina
 for i in {1..22}; do plink --vcf /M1/finalMask/M1.chr${i}.vcf --make-bed --out /M1/finalMask/M1.chr${i}; done
 
 #get a list of those plink files
-find /M1/finalMask/ -name "*.bim" | grep -e "Pruned" > /M1/finalMask/ForMerge.list ;
+find /M1/finalMask/ -name "*.bim" | grep -e "chr" > /M1/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M1/finalMask/ForMerge.list ;
 
@@ -56,7 +56,7 @@ for i in {1..22}; do cat headerStep1.txt /M2/finalMask/M2.chr${i}.txt > /M2/fina
 for i in {1..22}; do plink --vcf /M2/finalMask/M2.chr${i}.vcf --make-bed --out /M2/finalMask/M2.chr${i}; done
 
 #get a list of those plink files
-find /M2/finalMask/ -name "*.bim" | grep -e "Pruned" > /M2/finalMask/ForMerge.list ;
+find /M2/finalMask/ -name "*.bim" | grep -e "chr" > /M2/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M2/finalMask/ForMerge.list ;
 
@@ -86,7 +86,7 @@ for i in {1..22}; do cat headerStep1.txt /M3/finalMask/M3.chr${i}.txt > /M3/fina
 for i in {1..22}; do plink --vcf /M3/finalMask/M3.chr${i}.vcf --make-bed --out /M3/finalMask/M3.chr${i}; done
 
 #get a list of those plink files
-find /M3/finalMask/ -name "*.bim" | grep -e "Pruned" > /M3/finalMask/ForMerge.list ;
+find /M3/finalMask/ -name "*.bim" | grep -e "chr" > /M3/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M3/finalMask/ForMerge.list ;
 
@@ -117,7 +117,7 @@ for i in {1..22}; do cat headerStep1.txt /M4/finalMask/M4.chr${i}.txt > /M4/fina
 for i in {1..22}; do plink --vcf /M4/finalMask/M4.chr${i}.vcf --make-bed --out /M4/finalMask/M4.chr${i}; done
 
 #get a list of those plink files
-find /M4/finalMask/ -name "*.bim" | grep -e "Pruned" > /M4/finalMask/ForMerge.list ;
+find /M4/finalMask/ -name "*.bim" | ggrep -e "chr" > /M4/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M4/finalMask/ForMerge.list ;
 
