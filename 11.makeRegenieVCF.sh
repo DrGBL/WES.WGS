@@ -19,7 +19,7 @@ for i in {1..22}; do awk '{ print $2 }' /M1/M1.long.chr${i}.txt > /M1/M1.variant
 for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M1/M1.GT.chr${i}.txt; done
 
 #now use R to build the genotype
-Rscript /project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/M1.GT.R
+Rscript /path/to/M1.GT.R
 for i in {1..22}; do cat headerStep1.txt /M1/finalMask/M1.chr${i}.txt > /M1/finalMask/M1.chr${i}.vcf; done
 
 #now use plink to build 
@@ -49,7 +49,7 @@ for i in {1..22}; do awk '{ print $2 }' /M2/M2.long.chr${i}.txt > /M2/M2.variant
 for i in {1..22}; do bcftools view -i "%ID=@/M2/M2.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M2/M2.GT.chr${i}.txt; done
 
 #now use R to build the genotype
-Rscript /project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/M2.GT.R
+Rscript /path/to/M2.GT.R
 for i in {1..22}; do cat headerStep1.txt /M2/finalMask/M2.chr${i}.txt > /M2/finalMask/M2.chr${i}.vcf; done
 
 #now use plink to build 
@@ -79,7 +79,7 @@ for i in {1..22}; do awk '{ print $2 }' /M3/M3.long.chr${i}.txt > /M3/M3.variant
 for i in {1..22}; do bcftools view -i "%ID=@/M3/M3.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M3/M3.GT.chr${i}.txt; done
 
 #now use R to build the genotype
-Rscript /project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/M3.GT.R
+Rscript  /path/to/M3.GT.R
 for i in {1..22}; do cat headerStep1.txt /M3/finalMask/M3.chr${i}.txt > /M3/finalMask/M3.chr${i}.vcf; done
 
 #now use plink to build 
@@ -110,7 +110,7 @@ for i in {1..22}; do awk '{ print $2 }' /M4/M4.long.chr${i}.txt > /M4/M4.variant
 for i in {1..22}; do bcftools view -i "%ID=@/M4/M4.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M4/M4.GT.chr${i}.txt; done
 
 #now use R to build the genotype
-Rscript /project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/M4.GT.R
+Rscript  /path/to/M4.GT.R
 for i in {1..22}; do cat headerStep1.txt /M4/finalMask/M4.chr${i}.txt > /M4/finalMask/M4.chr${i}.vcf; done
 
 #now use plink to build 
