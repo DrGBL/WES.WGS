@@ -3,6 +3,8 @@
 #it assumes that vep was installed to work offline, and with a cache directory
 #it also assumes so files useful for loftee (e.g. human_ancestor.fa.gz), please see the very useful loftee github for more info: https://github.com/konradjk/loftee
 
+mkdir -p annotation
+
 for chr in {1..22}; do
   vep -i /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
     --plugin LoF,loftee_path:/path/to/.vep/Plugins/loftee,human_ancestor_fa:/path/to/human_ancestor.fa.gz,conservation_file:/path/to/phylocsf_gerp.sql \
@@ -13,6 +15,6 @@ for chr in {1..22}; do
     --offline \
     --dir_plugins /path/to/.vep/Plugins/loftee \
     --dir_cache /path/to/cache/directory \
-    --cache -o /scratch/richards/guillaume.butler-laporte/WGS/annotation/finalAnnot.chr"${chr}".txt ;
+    --cache -o /annotation/finalAnnot.chr"${chr}".txt ;
 done
 
