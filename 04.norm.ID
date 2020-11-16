@@ -1,16 +1,17 @@
 #This function normalizes variants and left-aligns them. Will be useful for further downstream analysis, including ancestry ascertainment and variant annotation
 
-bcftools view /scratch/richards/guillaume.butler-laporte/WGS/allSamples.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz -Ou | \
-  bcftools norm -m -any --check-ref w -f /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna | \
-  bcftools annotate --set-id '%CHROM:%POS:%REF:%FIRST_ALT' -Oz > /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
-tabix -p vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
+#it requires a fasta reference genome file (here the GRCh38), this can be downloaded with the following command (which then needs unzipping):
+wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
+gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
-#for SAIGE --set-id '%CHROM:%POS\_%REF\/%FIRST_ALT'
+bcftools norm -m -any --check-ref w -f /path/to/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna /path/to/sequence.file.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | \
+  bcftools annotate --set-id '%CHROM:%POS:%REF:%FIRST_ALT' -Oz > /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz
+tabix -p vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz
 
 
-
-#Obtain the list of variants for ancestry inference PCA (used later)
+#Obtain the list of variants for ancestry inference PCA (used later in ancestry ascertainment)
 for chr in {1..22}; do
-  bcftools view -r chr${chr} /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz | \
-  bcftools query -f "%ID\n" > /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/cohortSample/variants.chr${chr}.txt;
+  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | \
+  bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
 done
+
