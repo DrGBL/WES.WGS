@@ -1,0 +1,16 @@
+#This function normalizes variants and left-aligns them. Will be useful for further downstream analysis, including ancestry ascertainment and variant annotation
+
+bcftools view /scratch/richards/guillaume.butler-laporte/WGS/allSamples.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz -Ou | \
+  bcftools norm -m -any --check-ref w -f /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna | \
+  bcftools annotate --set-id '%CHROM:%POS:%REF:%FIRST_ALT' -Oz > /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
+tabix -p vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz
+
+#for SAIGE --set-id '%CHROM:%POS\_%REF\/%FIRST_ALT'
+
+
+
+#Obtain the list of variants for ancestry inference PCA (used later)
+for chr in {1..22}; do
+  bcftools view -r chr${chr} /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz | \
+  bcftools query -f "%ID\n" > /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/cohortSample/variants.chr${chr}.txt;
+done
