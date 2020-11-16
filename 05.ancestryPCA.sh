@@ -4,7 +4,17 @@
 #it was further modified to run a random forest classifier
 #requires R, plink 1.9, and bcftools >1.3
 
-#download the GRCh38 1000G data (the bandwitdh was slow when I tried, so it can be long)
+#the idea here is as follows:
+#1) obtain the 1000G reference files (in GRCh38 always), normalize and left-align them with the reference genome
+#2) from this file, only use the variants also found in your specific cohort, and further prune them to MAF over 10% and in linkage equilibrium
+#3) from your cohort variant file, only select those pruned variants from step 2
+#4) merge the 1000G file and you cohort's file, with only those pruned variants
+#5) perform PCA on this variant set
+#6) train a random forest with 6 principal components on the 1000G dataset
+#7) predict the ancestry in your cohort using that trained random forest
+#8) output files named like "afrIDsPCA.txt", for the study IDs of individuals predicted to be of a certain ancestry (here african, for example).
+
+#first, download the GRCh38 1000G data (the bandwitdh was slow when I tried, so it can be long)
 
 prefix="http://ftp.1000genomes.ebi.ac.uk/vol1/ftp/data_collections/1000_genomes_project/release/20181203_biallelic_SNV/ALL.chr"
 suffix=".shapeit2_integrated_v1a.GRCh38.20181129.phased.vcf.gz"
@@ -20,13 +30,18 @@ wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
-#convert 1000G vcf to bcf, normalizing and left-aligning variants, only taking variants also found in your cohort
+#Obtain the list of variants for ancestry inference PCA
+for chr in {1..22}; do
+  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | \
+  bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
+done
+
+#convert 1000G vcf to bcf, normalizing and left-aligning variants
 for chr in {1..22}; do
     bcftools norm -m-any --check-ref w -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
       ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased.vcf.gz | \
       bcftools annotate -x ID -I +'%CHROM:%POS:%REF:%ALT' | \
         bcftools norm -Ob --rm-dup both | \
-        bcftools filter -i "%ID=@/path/to/variants.chr${chr}.txt" -Ob \
           > ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased.bcf ;
 
     bcftools index ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased.bcf ;
@@ -52,7 +67,7 @@ mkdir -p Pruned ;
 for chr in {1..22}; do
     plink --noweb \
       --bfile ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased \
-      --extract /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/cohortSample/variants.chr{$chr}.txt \
+      --extract /path/to/variants.chr{$chr}.txt \
       --maf 0.10 --indep 50 5 1.5 \
       --out Pruned/ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased ;
 
@@ -72,15 +87,15 @@ sed -i 's/.bim//g' ForMerge.list ;
 plink --merge-list ForMerge.list --out Merge ;
 
 #make plink file from the full all sample VCF from your cohort, only keeping the pruned variants, then merge with the 1000G plink files
-awk '{ print $2 }' /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/Merge.bim > /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/MergeVariants.txt
+awk '{ print $2 }' Merge.bim > MergeVariants.txt
 
 mkdir -p cohortSample
 
 plink --vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz \
  --noweb \
- --extract /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/MergeVariants.txt \
+ --extract MergeVariants.txt \
  --make-bed \
- --out /scratch/richards/guillaume.butler-laporte/WGS/1000G.PCA/cohortSample/cohortSample
+ --out /cohortSample/cohortSample
 
 printf "Merge\n./cohortSample/cohortSample" > ForMergeFull.list
 
