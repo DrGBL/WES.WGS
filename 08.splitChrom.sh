@@ -3,6 +3,6 @@
 
 for chr in {1..22}; do
   bcftools filter -r chr"${chr}" /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Oz | \
-    > /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrM.vqsr.flt.vcf.gz
-    tabix -p vcf /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrM.vqsr.flt.vcf.gz;
+    > /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz
+    tabix -p vcf /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz;
 done
