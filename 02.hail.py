@@ -8,9 +8,9 @@ import hail as hl
 hl.init(spark_conf=None, tmp_dir='/path/to/tmp_dir/')
 
 #import the data and sample QC
-hl.import_vcf('/path/to/sequence.file.noChrM.vcf.gz', min_partitions=4, reference_genome='GRCh38', force_bgz=True).write('/scratch/richards/guillaume.butler-laporte/WGS/hailFiles/hail.full.noChrXY.mt', overwrite=True)
+hl.import_vcf('/path/to/sequence.file.noChrM.vcf.gz', min_partitions=4, reference_genome='GRCh38', force_bgz=True).write('/hailFiles/hail.full.noChrXY.mt', overwrite=True)
 
-mtAll = hl.read_matrix_table('/scratch/richards/guillaume.butler-laporte/WGS/hailFiles/hail.full.noChrM.mt')
+mtAll = hl.read_matrix_table('/hailFiles/hail.full.noChrXY.mt')
 mtAll= mtAll.annotate_entries(AB = (mtAll.AD[1] / hl.sum(mtAll.AD) ))
 mtAll=hl.sample_qc(mtAll)
 mtAll = mtAll.filter_cols((mtAll.sample_qc.call_rate >= 0.97) & (mtAll.sample_qc.dp_stats.mean >= 20))
