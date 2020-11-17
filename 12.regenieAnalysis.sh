@@ -12,7 +12,7 @@ mkdir -r regenieRes/M4
 #step 1
 regenie \
   --step 1 \
-  --bed /path/to/regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM \
+  --bed /path/to/regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM \
   --covarFile /path/to/covar.txt \
   --phenoFile /path/to/pheno.txt \
   --bt --lowmem \
