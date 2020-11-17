@@ -19,7 +19,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 03.reheader.sh: advanced hail functions did not work on our local cluster, so the rest of our analysis was done on regular vcf. This function reheaders the meta-data the vcf obtained from the hail QC. It will require some local tweaking.
 
-04.norm.ID.sh: normalizes and left aligns variants. Also obtains the the list of all variants in the cohort, to be used later by other functions.
+04.norm.ID.sh: normalizes and left aligns variants using the reference genome.
 
 05.ancestryPCA.sh: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
