@@ -5,7 +5,7 @@
 #requires R, plink 1.9, and bcftools >1.3
 
 #the idea here is as follows:
-#1) obtain the 1000G reference files (in GRCh38 always), normalize and left-align them with the reference genome
+#1) obtain the 1000G reference files (in GRCh38 always, only SNPs, and autosomal chromosomes), normalize and left-align them with the reference genome
 #2) from this file, only use the variants also found in your specific cohort, and further prune them to MAF over 10% and in linkage equilibrium
 #3) from your cohort variant file, only select those pruned variants from step 2
 #4) merge the 1000G file and you cohort's file, with only those pruned variants
