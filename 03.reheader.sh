@@ -12,6 +12,7 @@ bcftools view -h /path/to/sequence.file.GTflt.AB.noChrM.vcf.gz > /path/to/postHa
 #this needs to be fixed to #FORMAT=<ID=AD,Number=R,Type=Integer,Description="Allelic depths for the ref and alt alleles in the order listed"> 
 
 #Once this is done for all relevant lines proceed with the following:
-bcftools reheader -h /path/to/postHailHeader.txt /path/to/sequence.file.GTflt.AB.noChrM.vcf.gz | \
+zcat /path/to/sequence.file.GTflt.AB.noChrM.vcf.gz | \
+  bcftools reheader -h /path/to/postHailHeader.txt | \
   bgzip > /path/to/sequence.file.rehead.GTflt.AB.noChrM.vcf.gz
 tabix -p vcf /path/to/sequence.file.rehead.GTflt.AB.noChrM.vcf.gz
