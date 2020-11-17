@@ -3,10 +3,10 @@
 #regenie github: https://rgcgithub.github.io/regenie/
 
 mkdir -p regenieRes
-mkdir -r regenieRes/M1
-mkdir -r regenieRes/M2
-mkdir -r regenieRes/M3
-mkdir -r regenieRes/M4
+mkdir -p regenieRes/M1
+mkdir -p regenieRes/M2
+mkdir -p regenieRes/M3
+mkdir -p regenieRes/M4
 
 
 #step 1
