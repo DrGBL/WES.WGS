@@ -5,11 +5,11 @@
 
 mkdir -p regenieInputs
 
-plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
+plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
  --hwe 1E-6 midp \
  --make-bed \
  --maf 0.05 \
  --mac 5 \
  --geno 0.95 \
- --out /regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM 
+ --out /regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM 
  
