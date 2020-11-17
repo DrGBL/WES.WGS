@@ -9,7 +9,7 @@ Every effort was made to prioritize code clarity over efficiency, and there are 
 
 The code is numbered to give the order which it was ran at McGill, however these aren't always necessary, and you can sometimes jump ahead.
 
-Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python 3.6 module)
+Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python 3.7 module)
 
 ***The most important tweak to be done locally is to modify the path names in each of the functions, depending on how your cluster works. That is, the functions below will not work "out-of-the-box", you still need to tell them where to save or load some of the files they output or require as input.***
 
