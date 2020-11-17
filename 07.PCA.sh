@@ -4,7 +4,7 @@
 mkdir -p PCA
 
 #common
-plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
+plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 --biallelic-only strict \
 --chr 1-22 \
 --geno 0.05 \
@@ -17,7 +17,7 @@ plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
 --out /PCA/commonAllelesPruned
 
 
-plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
+plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 --extract /PCA/commonAllelesPruned.in \
 --pca 10 \
 --out /PCA/commonPCA.txt
@@ -25,7 +25,7 @@ plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
 
 #rare, given the relatively small size of my cohort, I set a MAC threshold of 2. This can be adjusted by each cohort.
 
-plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
+plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 --biallelic-only strict \
 --chr 1-22 \
 --geno 0.05 \
@@ -38,7 +38,7 @@ plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
 --out /PCA/rareAllelesPruned
 
 
-plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz \
+plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 --extract /PCA/rareAllelesPruned.in \
 --pca 20 \
 --out /PCA/rarePCA.txt
