@@ -13,7 +13,7 @@ Dependencies: bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), an
 
 Here's a summary of what each function does, with more comments in each specific file:
 
-01.autosomal.sh: keeps only autosomal chromosome, this may not be necessary in your cohort, but the smaller sample size at the BQC-19 caused some trouble with QCing in those regions, so for now we omitted them.
+01.autosomalXY.sh: removes mitochondrial DNA (chrM).
 
 02.hail.py: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
 
