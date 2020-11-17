@@ -3,7 +3,7 @@
 
 #builds the header for the vcf file I'm building
 printf "##fileformat=VCFv4.2\n##fileDate=20201110\n##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">" > headerStep1Final.txt
-zcat /scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz | head -n 5000 | grep '#CHROM'  > /project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/VCF.sct.regenie/columns.txt
+zcat /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz | head -n 5000 | grep '#CHROM'  > /path/to/columns.txt
 
 ###### M1 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M1
@@ -16,7 +16,7 @@ for i in {1..22}; do awk '{ print $4, $1 }' /M1/M1.annot.chr${i}.txt | sort -k 2
 for i in {1..22}; do awk '{ print $2 }' /M1/M1.long.chr${i}.txt > /M1/M1.variants.chr${i}.txt; done
 
 #now use bcftools to view only those variants and obtain each sample's genotype
-for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M1/M1.GT.chr${i}.txt; done
+for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M1/M1.GT.chr${i}.txt; done
 
 #now use R to build the genotype
 Rscript /path/to/M1.GT.R
@@ -46,7 +46,7 @@ for i in {1..22}; do awk '{ print $4, $1 }' /M2/M2.annot.chr${i}.txt | sort -k 2
 for i in {1..22}; do awk '{ print $2 }' /M2/M2.long.chr${i}.txt > /M2/M2.variants.chr${i}.txt; done
 
 #now use bcftools to view only those variants and obtain each sample's genotype
-for i in {1..22}; do bcftools view -i "%ID=@/M2/M2.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M2/M2.GT.chr${i}.txt; done
+for i in {1..22}; do bcftools view -i "%ID=@/M2/M2.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M2/M2.GT.chr${i}.txt; done
 
 #now use R to build the genotype
 Rscript /path/to/M2.GT.R
@@ -76,7 +76,7 @@ for i in {1..22}; do awk '{ print $4, $1 }' /M3/M3.annot.chr${i}.txt | sort -k 2
 for i in {1..22}; do awk '{ print $2 }' /M3/M3.long.chr${i}.txt > /M3/M3.variants.chr${i}.txt; done
 
 #now use bcftools to view only those variants and obtain each sample's genotype
-for i in {1..22}; do bcftools view -i "%ID=@/M3/M3.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M3/M3.GT.chr${i}.txt; done
+for i in {1..22}; do bcftools view -i "%ID=@/M3/M3.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M3/M3.GT.chr${i}.txt; done
 
 #now use R to build the genotype
 Rscript  /path/to/M3.GT.R
@@ -107,7 +107,7 @@ for i in {1..22}; do awk '{ print $4, $1 }' /M4/M4.annot.chr${i}.txt | sort -k 2
 for i in {1..22}; do awk '{ print $2 }' /M4/M4.long.chr${i}.txt > /M4/M4.variants.chr${i}.txt; done
 
 #now use bcftools to view only those variants and obtain each sample's genotype
-for i in {1..22}; do bcftools view -i "%ID=@/M4/M4.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M4/M4.GT.chr${i}.txt; done
+for i in {1..22}; do bcftools view -i "%ID=@/M4/M4.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M4/M4.GT.chr${i}.txt; done
 
 #now use R to build the genotype
 Rscript  /path/to/M4.GT.R
