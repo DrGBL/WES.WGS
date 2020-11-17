@@ -32,7 +32,7 @@ gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
 #Obtain the list of variants for ancestry inference PCA
 for chr in {1..22}; do
-  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrXYM.vcf.gz -Ou | \
+  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | \
   bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
 done
 
@@ -91,7 +91,7 @@ awk '{ print $2 }' Merge.bim > MergeVariants.txt
 
 mkdir -p cohortSample
 
-plink --vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrXYM.vqsr.flt.vcf.gz \
+plink --vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrM.vqsr.flt.vcf.gz \
  --noweb \
  --extract MergeVariants.txt \
  --make-bed \
