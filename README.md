@@ -9,7 +9,7 @@ Every effort was made to prioritize code clarity over efficiency, and there are 
 
 The code is numbered to give the order which it was ran at McGill, however these aren't always necessary, and you can sometimes jump ahead.
 
-Dependencies: bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python module)
+Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python 3.6 module)
 
 Here's a summary of what each function does, with more comments in each specific file:
 
