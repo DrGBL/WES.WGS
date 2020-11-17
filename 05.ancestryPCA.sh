@@ -91,7 +91,7 @@ awk '{ print $2 }' Merge.bim > MergeVariants.txt
 
 mkdir -p cohortSample
 
-plink --vcf /scratch/richards/guillaume.butler-laporte/WGS/allSamples.normID.rehead.GTflt.AB.noChrM.vqsr.flt.vcf.gz \
+plink --vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz \
  --noweb \
  --extract MergeVariants.txt \
  --make-bed \
