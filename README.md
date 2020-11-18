@@ -1,5 +1,4 @@
-# WES.WGS
-Covid-19 HGI WES/WGS burden test BQC-19 pipeline
+# Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines.
 
@@ -35,7 +34,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 `10.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
-`11.makeRegenieVCF.sh`: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie. This function depends on 4 R files: M1.GT.R, M2.GT.R, M3.GT.R, and M4.GT.R.
+`11.makeRegenieVCF.sh`: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie. This function depends on 4 R files: `M1.GT.R`, `M2.GT.R`, `M3.GT.R`, and `M4.GT.R`.
 
 `12.regenieAnalysis.sh`: this is where the magic happens with regenie.
 
