@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-This is code made available to other members of the consortium, in an effort to help with their local pipelines.
+This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v4) can be found here: https://docs.google.com/document/d/1Rr1mhvY6JViHpkGg_QtoP0VfB0-YNqb2vxscNY7PbVw/edit
 
 Note that all code is written assuming that the GRCh38 genome is used.
 
