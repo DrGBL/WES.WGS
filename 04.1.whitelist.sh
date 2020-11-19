@@ -1,9 +1,9 @@
 
-# The function is in 2 parts. First, it repeats what was done in function 04.normID.sh, in case you've already ran it.
+# The function is in 2 parts. First, it repeats what was done in function 04.normID.sh, in case it was not done already.
 # Second, it outputs chromosome, position, ID, alleles, and MAF.
 
 # Part 1 (again, can be skipped if 04.normID.sh was done already)
-# It should still be done only after variant, genotype, and sample QC was performed
+# This should only be done on QC'ed vcf file, and after removal of mitochondrial DNA (i.e. chrM).
 # It requires a fasta reference genome file (here the GRCh38), this can be downloaded with the following command (which then needs unzipping):
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
