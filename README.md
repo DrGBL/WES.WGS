@@ -22,6 +22,8 @@ Here's a summary of what each function does, with more comments in each specific
 
 `04.norm.ID.sh`: normalizes and left aligns variants using the reference genome.
 
+`04.1.whitelist.sh`: this is the suggested code to obtain the list of variants to be used to build our list of allowed variants.
+
 `05.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
 `06.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
