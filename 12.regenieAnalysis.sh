@@ -21,7 +21,7 @@ regenie \
   --out /regenieRes/
 
 
- #step 2 for M1, outcome number 1
+ #step 2 for M1
 regenie \
   --step 2 \
   --bed /path/to/M1/finalMask/MergeM1 \
@@ -31,11 +31,11 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
-  --pred /regenieRes/regenieRes_1.loco \
+  --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M1/M1.step2
   
-   #step 2 for M2, outcome number 1
+   #step 2 for M2
 regenie \
   --step 2 \
   --bed /path/to/M2/finalMask/MergeM2 \
@@ -45,11 +45,11 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
-  --pred /regenieRes/regenieRes_1.loco \
+  --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M2/M2.step2
   
-   #step 2 for M3, outcome number 1
+   #step 2 for M3
 regenie \
   --step 2 \
   --bed /path/to/M3/finalMask/MergeM3 \
@@ -59,11 +59,11 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
-  --pred /regenieRes/regenieRes_1.loco \
+  --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M3/M3.step2
   
-   #step 2 for M4, outcome number 1
+   #step 2 for M4
 regenie \
   --step 2 \
   --bed /path/to/M4/finalMask/MergeM4 \
@@ -73,6 +73,6 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
-  --pred /regenieRes/regenieRes_1.loco \
+  --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M4/M4.step2
