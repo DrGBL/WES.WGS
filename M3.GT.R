@@ -45,7 +45,7 @@ for(i in 1:22){
   
   #this is the vcf
   nGene<-nrow(table(M3.tmp$ID))
-  M3<-data.frame("#CHROM"=rep(paste0("chr",i), nGene), POS=c(1:nGene), ID=names(table(M3.tmp$ID)), REF=rep("C",nGene), ALT=rep("A",nGene), QUAL=rep(".", nGene), FILTER=rep(".", nGene), INFO=rep(".", nGene), FORMAT=rep(".", nGene))
+  M3<-data.frame("#CHROM"=rep(paste0("chr",i), nGene), POS=c(1:nGene), ID=names(table(M3.tmp$ID)), REF=rep("C",nGene), ALT=rep("A",nGene), QUAL=rep(".", nGene), FILTER=rep(".", nGene), INFO=rep(".", nGene), FORMAT=rep("GT", nGene))
   colnames(M3)[1]<-"#CHROM"
   M3<-merge(M3,M3.tmp)
   M3<-M3 %>% relocate("#CHROM", "POS")
