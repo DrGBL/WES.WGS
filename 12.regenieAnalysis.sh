@@ -31,6 +31,7 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
+  --minMAC 1\
   --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M1/M1.step2
@@ -45,6 +46,7 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
+  --minMAC 1\
   --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M2/M2.step2
@@ -59,6 +61,7 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
+  --minMAC 1\
   --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M3/M3.step2
@@ -73,6 +76,7 @@ regenie \
   --bsize 100 \
   --firth --approx \
   --pThresh 0.05 \
+  --minMAC 1\
   --pred /regenieRes/_pred.list \
   --split \
   --out /regenieRes/M4/M4.step2
