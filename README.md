@@ -14,7 +14,7 @@ Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and
 
 Here's a summary of what each function does, with more comments in each specific file:
 
-`exclusionList.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants list.
+`exclusion.list.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants list.
 
 `01.autosomalXY.sh`: removes mitochondrial DNA (chrM).
 
