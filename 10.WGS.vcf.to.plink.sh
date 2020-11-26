@@ -8,8 +8,8 @@ mkdir -p regenieInputs
 plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
  --hwe 1E-6 midp \
  --make-bed \
- --maf 0.05 \
+ --maf 0.01 \
  --mac 5 \
- --geno 0.95 \
+ --geno 0.1 \
  --out /regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM 
  
