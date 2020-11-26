@@ -14,6 +14,8 @@ Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and
 
 Here's a summary of what each function does, with more comments in each specific file:
 
+`exclusionList.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants list.
+
 `01.autosomalXY.sh`: removes mitochondrial DNA (chrM).
 
 `02.norm.ID.sh`: normalizes and left aligns variants using the reference genome.
@@ -21,8 +23,6 @@ Here's a summary of what each function does, with more comments in each specific
 `03.hail.py`: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
 
 `04.reheader.sh`: advanced hail functions did not work on our local cluster, so the rest of our analysis was done on regular vcf. This function reheaders the meta-data the vcf obtained from the hail QC. It will require some local tweaking.
-
-`04.1.whitelist.sh`: this is the suggested code to obtain the list of variants to be used to build our list of allowed variants.
 
 `05.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
