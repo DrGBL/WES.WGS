@@ -1,15 +1,34 @@
 #this is somewhat of a long file, because it is split in four masks.
 #it uses the M1.GT.R M2.GT.R M3.GT.R and M4.GT.R functions
 
+#first filter out variants with any of 1000G, ESP, or gnomAD populations MAF>1%
+for i in {1..22} X Y; do awk '!/AFR_AF=0\.0[1-9]|AFR_AF=0\.[1-8][0-9][0-9]|AFR_AF=0\.9[0-8]/ &&
+    !/AMR_AF=0\.0[1-9]|AMR_AF=0\.[1-8][0-9][0-9]|AMR_AF=0\.9[0-8]/ &&
+    !/EAS_AF=0\.0[1-9]|EAS_AF=0\.[1-8][0-9][0-9]|EAS_AF=0\.9[0-8]/ &&
+    !/EUR_AF=0\.0[1-9]|EUR_AF=0\.[1-8][0-9][0-9]|EUR_AF=0\.9[0-8]/ &&
+    !/SAS_AF=0\.0[1-9]|SAS_AF=0\.[1-8][0-9][0-9]|SAS_AF=0\.9[0-8]/ &&
+    !/AA_AF=0\.0[1-9]|AA_AF=0\.[1-8][0-9][0-9]|AA_AF=0\.9[0-8]/ &&
+    !/EA_AF=0\.0[1-9]|EA_AF=0\.[1-8][0-9][0-9]|EA_AF=0\.9[0-8]/ &&
+    !/gnomAD_AFR_AF=0\.0[1-9]|gnomAD_AFR_AF=0\.[1-8][0-9][0-9]|gnomAD_AFR_AF=0\.9[0-8]/ &&
+    !/gnomAD_AMR_AF=0\.0[1-9]|gnomAD_AMR_AF=0\.[1-8][0-9][0-9]|gnomAD_AMR_AF=0\.9[0-8]/ &&
+    !/gnomAD_ASJ_AF=0\.0[1-9]|gnomAD_ASJ_AF=0\.[1-8][0-9][0-9]|gnomAD_ASJ_AF=0\.9[0-8]/ &&
+    !/gnomAD_EAS_AF=0\.0[1-9]|gnomAD_EAS_AF=0\.[1-8][0-9][0-9]|gnomAD_EAS_AF=0\.9[0-8]/ &&
+    !/gnomAD_FIN_AF=0\.0[1-9]|gnomAD_FIN_AF=0\.[1-8][0-9][0-9]|gnomAD_FIN_AF=0\.9[0-8]/ &&
+    !/gnomAD_NFE_AF=0\.0[1-9]|gnomAD_NFE_AF=0\.[1-8][0-9][0-9]|gnomAD_NFE_AF=0\.9[0-8]/ &&
+    !/gnomAD_OTH_AF=0\.0[1-9]|gnomAD_OTH_AF=0\.[1-8][0-9][0-9]|gnomAD_OTH_AF=0\.9[0-8]/ &&
+    !/gnomAD_SAS_AF=0\.0[1-9]|gnomAD_SAS_AF=0\.[1-8][0-9][0-9]|gnomAD_SAS_AF=0\.9[0-8]/' | 
+    /path/to/annotation/finalAnnot.chr${x}.txt > /path/to/annotation/rareAnnot.rare.chr${x}.txt;
+done
+
+
 #builds the header for the vcf file I'm building
-printf "##fileformat=VCFv4.2\n##fileDate=20201110\n##FORMAT=<ID=GT,Number=1,Type=String,Description="Genotype">" > headerStep1Final.txt
 zcat /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz | head -n 5000 | grep '#CHROM'  > /path/to/columns.txt
 
 ###### M1 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M1
 mkdir -p M1/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '/LoF=HC/ && /CANONICAL=YES/ && !/MAX_AF=0.[0-9][1-9]*;/' /path/to/annotation/finalAnnot.chr${i}.txt > /M1/M1.annot.chr${i}.txt; done
+for i in {1..22}; do awk '/LoF=HC/ && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M1/M1.annot.chr${i}.txt; done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M1/M1.annot.chr${i}.txt | sort -k 2 | uniq > /M1/M1.long.chr${i}.txt; done
@@ -39,7 +58,7 @@ plink --merge-list /M1/finalMask/ForMerge.list --out /M1/finalMask/MergeM1 ;
 mkdir -p M2
 mkdir -p M2/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '(/LoF=HC/ || /missense_variant/) && /CANONICAL=YES/ && !/MAX_AF=0.[0-9][1-9]*;/' /path/to/annotation/finalAnnot.chr${i}.txt > /M2/M2.annot.chr${i}.txt; done
+for i in {1..22}; do awk '(/LoF=HC/ || /missense_variant/) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M2/M2.annot.chr${i}.txt; done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M2/M2.annot.chr${i}.txt | sort -k 2 | uniq > /M2/M2.long.chr${i}.txt; done
@@ -69,7 +88,7 @@ plink --merge-list /M2/finalMask/ForMerge.list --out /M2/finalMask/MergeM2 ;
 mkdir -p M3
 mkdir -p M3/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && /SIFT_pred=[,DT]*D/ && /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ && /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ && (/MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/) && /LRT_pred=[;DNU]*D[;DNU]*;/)) && /CANONICAL=YES/ && !/MAX_AF=0.[0-9][1-9]*;/' /path/to/annotation/finalAnnot.chr${i}.txt > /M3/M3.annot.chr${i}.txt; done
+for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && /SIFT_pred=[,DT]*D/ && /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ && /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ && (/MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/) && /LRT_pred=[;DNU]*D[;DNU]*;/)) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M3/M3.annot.chr${i}.txt; done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M3/M3.annot.chr${i}.txt | sort -k 2 | uniq > /M3/M3.long.chr${i}.txt; done
@@ -100,7 +119,7 @@ plink --merge-list /M3/finalMask/ForMerge.list --out /M3/finalMask/MergeM3 ;
 mkdir -p M4
 mkdir -p M4/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && (/SIFT_pred=[,DT]*D/ || /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ || /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ || /MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/ || /LRT_pred=[;DNU]*D[;DNU]*;/))) && /CANONICAL=YES/ && !/MAX_AF=0.[0-9][1-9]*;/' /path/to/annotation/finalAnnot.chr${i}.txt > /M4/M4.annot.chr${i}.txt; done
+for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && (/SIFT_pred=[,DT]*D/ || /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ || /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ || /MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/ || /LRT_pred=[;DNU]*D[;DNU]*;/))) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M4/M4.annot.chr${i}.txt; done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M4/M4.annot.chr${i}.txt | sort -k 2 | uniq > /M4/M4.long.chr${i}.txt; done
