@@ -143,7 +143,11 @@ done
 mkdir -p M3
 mkdir -p M3/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && /SIFT_pred=[,DT]*D/ && /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ && /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ && (/MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/) && /LRT_pred=[;DNU]*D[;DNU]*;/)) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M3/M3.annot.chr${i}.txt; done
+for i in {1..22} X Y; 
+  do awk '(/LoF=HC/ || (/missense_variant/ && /SIFT_pred=[,DT\.]*D[,DT\.]*;/ && /Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;/ && /Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;/ && (/MutationTaster_pred=[,ADNP\.]*D[,ADNP\.]*;/ || /MutationTaster_pred=[,ADNP\.]*A[,ADNP\.]*;/) && /LRT_pred=D;/)) && /CANONICAL=YES;/' /path/to/annotation/rareAnnot.chr${i}.txt | sort > /path/to/tmp/sorted.M3.Annot.chr${i}.txt 
+
+  join -j 1 /path/to/tmp/M3.ID.chr${i}.txt /path/to/tmp/sorted.M3.Annot.chr${i}.txt > /M3/M3.annot.chr${i}.txt
+done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M3/M3.annot.chr${i}.txt | sort -k 2 | uniq > /M3/M3.long.chr${i}.txt; done
