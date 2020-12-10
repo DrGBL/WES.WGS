@@ -178,7 +178,11 @@ plink --merge-list /M3/finalMask/ForMerge.list --out /M3/finalMask/MergeM3 ;
 mkdir -p M4
 mkdir -p M4/finalMask
 #first filter for the correct variants
-for i in {1..22}; do awk '(/loF=HC/ || (/missense_variant/ && (/SIFT_pred=[,DT]*D/ || /Polyphen2_HVAR_pred=[,DPB]*D[,DPB]*;/ || /Polyphen2_HDIV_pred=[,DPB]*D[,DPB]*;/ || /MutationTaster_pred=[,ADNP]*D[,ADNP]*;/ || /MutationTaster_pred=[,ADNP]*A[,ADNP]*;/ || /LRT_pred=[;DNU]*D[;DNU]*;/))) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M4/M4.annot.chr${i}.txt; done
+for i in {1..22} X Y; 
+  do awk '(/LoF=HC/ || (/missense_variant/ && (/SIFT_pred=[,DT\.]*D[,DT\.]*;/ || /Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;/ || /Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;/ || /MutationTaster_pred=[,ADNP\.]*D[,ADNP\.]*;/ || /MutationTaster_pred=[,ADNP\.]*A[,ADNP\.]*;/ || /LRT_pred=D;/))) && /CANONICAL=YES;/' /path/to/annotation/rareAnnot.chr${i}.txt > /path/to/tmp/sorted.M4.Annot.chr${i}.txt;
+
+  join -j 1 /path/to/tmp/M4.ID.chr${i}.txt /path/to/tmp/sorted.M4.Annot.chr${i}.txt > /M4/M4.annot.chr${i}.txt
+done
 
 #now obtain files listing the variants and their corresponding genes, ordered by chromosomal position
 for i in {1..22}; do awk '{ print $4, $1 }' /M4/M4.annot.chr${i}.txt | sort -k 2 | uniq > /M4/M4.long.chr${i}.txt; done
