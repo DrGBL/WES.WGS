@@ -5,12 +5,13 @@
 
 mkdir -p regenieInputs
 
+#suggest to also prune for LD, to speed up regenie step 1
+
 plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
  --hwe 1E-6 midp \
  --make-bed \
  --maf 0.01 \
  --mac 5 \
- --mind 0.1 \
  --geno 0.1 \
  --out /regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM 
  
