@@ -8,7 +8,7 @@ mkdir -p annotation
 for chr in {1..22}; do
   vep -i /path/to/sequence.file.chr"${chr}".Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
     --plugin LoF,loftee_path:/path/to/.vep/Plugins/loftee,human_ancestor_fa:/path/to/human_ancestor.fa.gz,conservation_file:/path/to/phylocsf_gerp.sql \
-    --plugin dbNSFP,/project/richards/guillaume.butler-laporte/bin/dbSNFP4.0a_files/dbNSFP4.0a.gz,LRT_pred,SIFT_pred,MutationTaster_pred,Polyphen2_HDIV_pred,Polyphen2_HVAR_pred \
+    --plugin dbNSFP,/project/richards/guillaume.butler-laporte/bin/dbSNFP4.0a_files/dbNSFP4.0a.gz,Ensembl_transcriptid,VEP_canonical,LRT_pred,SIFT_pred,MutationTaster_pred,Polyphen2_HDIV_pred,Polyphen2_HVAR_pred \
     -everything \
     --buffer_size 10000 \
     --fork 10 \
