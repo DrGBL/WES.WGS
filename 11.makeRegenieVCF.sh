@@ -20,6 +20,12 @@ for i in {1..22} X Y; do awk '!/AFR_AF=0\.0[1-9]|AFR_AF=0\.[1-8][0-9][0-9]|AFR_A
     /path/to/annotation/finalAnnot.chr${x}.txt > /path/to/annotation/rareAnnot.rare.chr${x}.txt;
 done
 
+# then reformat the exclusion list
+
+for i in {1..22} X Y; do
+  awk -v var=$i '{ if ( $1 == "chr"var ) print $1":"$2":"$3":"$4 }' FS='\t' /path/to/finalExclusionList.txt > /path/to/chr${i}.ExclusionList.txt;
+done
+
 
 #builds the header for the vcf file I'm building
 zcat /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz | head -n 5000 | grep '#CHROM'  > /path/to/columns.txt
@@ -27,6 +33,8 @@ zcat /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz | head -n 5
 ###### M1 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M1
 mkdir -p M1/finalMask
+mkdir -p M1.2
+mkdir -p M1.2/finalMask
 #first filter for the correct variants
 for i in {1..22}; do awk '/LoF=HC/ && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M1/M1.annot.chr${i}.txt; done
 
@@ -37,21 +45,29 @@ for i in {1..22}; do awk '{ print $2 }' /M1/M1.long.chr${i}.txt > /M1/M1.variant
 #now use bcftools to view only those variants and obtain each sample's genotype
 for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M1/M1.GT.chr${i}.txt; done
 
+#this is for the analysis with merged exclusion list
+for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools view -e  "%ID=@/path/to/chr${i}.ExclusionList.txt" -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M1.2/M1.2.GT.chr${i}.txt; done
+
+
 #now use R to build the genotype
 Rscript /path/to/M1.GT.R
 for i in {1..22}; do cat headerStep1.txt /M1/finalMask/M1.chr${i}.txt > /M1/finalMask/M1.chr${i}.vcf; done
+for i in {1..22}; do cat headerStep1.txt /M1.1/finalMask/M1.2.chr${i}.txt > /M1.2/finalMask/M1.2.chr${i}.vcf; done
 
 #now use plink to build 
 for i in {1..22}; do plink --vcf /M1/finalMask/M1.chr${i}.vcf --make-bed --out /M1/finalMask/M1.chr${i}; done
+for i in {1..22}; do plink --vcf /M1.2/finalMask/M1.2.chr${i}.vcf --make-bed --out /M1.2/finalMask/M1.2.chr${i}; done
 
 #get a list of those plink files
 find /M1/finalMask/ -name "*.bim" | grep -e "chr" > /M1/finalMask/ForMerge.list ;
+find /M1.2/finalMask/ -name "*.bim" | grep -e "chr" > /M1.2/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M1/finalMask/ForMerge.list ;
+sed -i 's/.bim//g' /M1.2/finalMask/ForMerge.list ;
 
 #merge all files in one
 plink --merge-list /M1/finalMask/ForMerge.list --out /M1/finalMask/MergeM1 ;
-
+plink --merge-list /M1.2/finalMask/ForMerge.list --out /M1.2/finalMask/MergeM1.2 ;
 
 
 ###### M2 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
@@ -67,20 +83,29 @@ for i in {1..22}; do awk '{ print $2 }' /M2/M2.long.chr${i}.txt > /M2/M2.variant
 #now use bcftools to view only those variants and obtain each sample's genotype
 for i in {1..22}; do bcftools view -i "%ID=@/M2/M2.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M2/M2.GT.chr${i}.txt; done
 
+#this is for the analysis with merged exclusion list
+for i in {1..22}; do bcftools view -i "%ID=@/M2/M2.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools view -e  "%ID=@/path/to/chr${i}.ExclusionList.txt" -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M2.2/M2.2.GT.chr${i}.txt; done
+
+
 #now use R to build the genotype
 Rscript /path/to/M2.GT.R
 for i in {1..22}; do cat headerStep1.txt /M2/finalMask/M2.chr${i}.txt > /M2/finalMask/M2.chr${i}.vcf; done
+for i in {1..22}; do cat headerStep1.txt /M2.2/finalMask/M2.2.chr${i}.txt > /M2.2/finalMask/M2.2.chr${i}.vcf; done
 
 #now use plink to build 
 for i in {1..22}; do plink --vcf /M2/finalMask/M2.chr${i}.vcf --make-bed --out /M2/finalMask/M2.chr${i}; done
+for i in {1..22}; do plink --vcf /M2.2/finalMask/M2.2.chr${i}.vcf --make-bed --out /M2.2/finalMask/M2.2.chr${i}; done
 
 #get a list of those plink files
 find /M2/finalMask/ -name "*.bim" | grep -e "chr" > /M2/finalMask/ForMerge.list ;
+find /M2.2/finalMask/ -name "*.bim" | grep -e "chr" > /M2.2/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M2/finalMask/ForMerge.list ;
+sed -i 's/.bim//g' /M2.2/finalMask/ForMerge.list ;
 
 #merge all files in one
 plink --merge-list /M2/finalMask/ForMerge.list --out /M2/finalMask/MergeM2 ;
+plink --merge-list /M2.2/finalMask/ForMerge.list --out /M2.2/finalMask/MergeM2.2 ;
 
 
 #for M3 and M4, need to play around with the dbNSFP vep annotation a bit to match the canonical variant
@@ -142,6 +167,8 @@ done
 ###### M3 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M3
 mkdir -p M3/finalMask
+mkdir -p M3.2
+mkdir -p M3.2/finalMask
 #first filter for the correct variants
 for i in {1..22} X Y; 
   do awk '(/LoF=HC/ || (/missense_variant/ && /SIFT_pred=[,DT\.]*D[,DT\.]*;/ && /Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;/ && /Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;/ && (/MutationTaster_pred=[,ADNP\.]*D[,ADNP\.]*;/ || /MutationTaster_pred=[,ADNP\.]*A[,ADNP\.]*;/) && /LRT_pred=D;/)) && /CANONICAL=YES;/' /path/to/annotation/rareAnnot.chr${i}.txt | sort > /path/to/tmp/sorted.M3.Annot.chr${i}.txt 
@@ -156,20 +183,29 @@ for i in {1..22}; do awk '{ print $2 }' /M3/M3.long.chr${i}.txt > /M3/M3.variant
 #now use bcftools to view only those variants and obtain each sample's genotype
 for i in {1..22}; do bcftools view -i "%ID=@/M3/M3.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M3/M3.GT.chr${i}.txt; done
 
+#this is for the analysis with merged exclusion list
+for i in {1..22}; do bcftools view -i "%ID=@/M3/M3.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools view -e  "%ID=@/path/to/chr${i}.ExclusionList.txt" -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M3.2/M3.2.GT.chr${i}.txt; done
+
+
 #now use R to build the genotype
 Rscript  /path/to/M3.GT.R
 for i in {1..22}; do cat headerStep1.txt /M3/finalMask/M3.chr${i}.txt > /M3/finalMask/M3.chr${i}.vcf; done
+for i in {1..22}; do cat headerStep1.txt /M3.2/finalMask/M3.2.chr${i}.txt > /M3.2/finalMask/M3.2.chr${i}.vcf; done
 
 #now use plink to build 
 for i in {1..22}; do plink --vcf /M3/finalMask/M3.chr${i}.vcf --make-bed --out /M3/finalMask/M3.chr${i}; done
+for i in {1..22}; do plink --vcf /M3.2/finalMask/M3.2.chr${i}.vcf --make-bed --out /M3.2/finalMask/M3.2.chr${i}; done
 
 #get a list of those plink files
 find /M3/finalMask/ -name "*.bim" | grep -e "chr" > /M3/finalMask/ForMerge.list ;
+find /M3.2/finalMask/ -name "*.bim" | grep -e "chr" > /M3.2/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M3/finalMask/ForMerge.list ;
+sed -i 's/.bim//g' /M3.2/finalMask/ForMerge.list ;
 
 #merge all files in one
 plink --merge-list /M3/finalMask/ForMerge.list --out /M3/finalMask/MergeM3 ;
+plink --merge-list /M3.2/finalMask/ForMerge.list --out /M3.2/finalMask/MergeM3.2 ;
 
 
 
@@ -177,6 +213,8 @@ plink --merge-list /M3/finalMask/ForMerge.list --out /M3/finalMask/MergeM3 ;
 ###### M4 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M4
 mkdir -p M4/finalMask
+mkdir -p M4.2
+mkdir -p M4.2/finalMask
 #first filter for the correct variants
 for i in {1..22} X Y; 
   do awk '(/LoF=HC/ || (/missense_variant/ && (/SIFT_pred=[,DT\.]*D[,DT\.]*;/ || /Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;/ || /Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;/ || /MutationTaster_pred=[,ADNP\.]*D[,ADNP\.]*;/ || /MutationTaster_pred=[,ADNP\.]*A[,ADNP\.]*;/ || /LRT_pred=D;/))) && /CANONICAL=YES;/' /path/to/annotation/rareAnnot.chr${i}.txt > /path/to/tmp/sorted.M4.Annot.chr${i}.txt;
@@ -191,17 +229,26 @@ for i in {1..22}; do awk '{ print $2 }' /M4/M4.long.chr${i}.txt > /M4/M4.variant
 #now use bcftools to view only those variants and obtain each sample's genotype
 for i in {1..22}; do bcftools view -i "%ID=@/M4/M4.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M4/M4.GT.chr${i}.txt; done
 
+#this is for the analysis with merged exclusion list
+for i in {1..22}; do bcftools view -i "%ID=@/M4/M4.variants.chr${i}.txt" /path/to/sequence.file.chr${i}.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | bcftools view -e  "%ID=@/path/to/chr${i}.ExclusionList.txt" -Ou | bcftools filter -i 'INFO/MAF<=0.01' -Ou | bcftools query -f '%ID [ %GT] \n' > /M4.2/M4.2.GT.chr${i}.txt; done
+
+
 #now use R to build the genotype
 Rscript  /path/to/M4.GT.R
 for i in {1..22}; do cat headerStep1.txt /M4/finalMask/M4.chr${i}.txt > /M4/finalMask/M4.chr${i}.vcf; done
+for i in {1..22}; do cat headerStep1.txt /M4.2/finalMask/M4.2.chr${i}.txt > /M4.2/finalMask/M4.2.chr${i}.vcf; done
 
 #now use plink to build 
 for i in {1..22}; do plink --vcf /M4/finalMask/M4.chr${i}.vcf --make-bed --out /M4/finalMask/M4.chr${i}; done
+for i in {1..22}; do plink --vcf /M4.2/finalMask/M4.2.chr${i}.vcf --make-bed --out /M4.2/finalMask/M4.2.chr${i}; done
 
 #get a list of those plink files
 find /M4/finalMask/ -name "*.bim" | ggrep -e "chr" > /M4/finalMask/ForMerge.list ;
+find /M4.2/finalMask/ -name "*.bim" | ggrep -e "chr" > /M4.2/finalMask/ForMerge.list ;
 
 sed -i 's/.bim//g' /M4/finalMask/ForMerge.list ;
+sed -i 's/.bim//g' /M4.2/finalMask/ForMerge.list ;
 
 #merge all files in one
 plink --merge-list /M4/finalMask/ForMerge.list --out /M4/finalMask/MergeM4 ;
+plink --merge-list /M4.2/finalMask/ForMerge.list --out /M4.2/finalMask/MergeM4.2 ;
