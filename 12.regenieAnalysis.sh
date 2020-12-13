@@ -16,7 +16,8 @@ regenie \
   --covarFile /path/to/covar.txt \
   --phenoFile /path/to/pheno.txt \
   --bt --lowmem \
-  --bsize 100 \
+  --extract /path/to/regenieInputs/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.prune.in
+  --bsize 1000 \
   --lowmem-prefix /regenieRes/ \
   --out /regenieRes/
 
