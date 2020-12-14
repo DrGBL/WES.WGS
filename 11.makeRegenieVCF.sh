@@ -111,50 +111,81 @@ plink --merge-list /M2.2/finalMask/ForMerge.list --out /M2.2/finalMask/MergeM2.2
 #for M3 and M4, need to play around with the dbNSFP vep annotation a bit to match the canonical variant
 #I will create a tmp file here due to this part creating a lot of temporary files
 
-mkdir -p path/to/tmp
+mkdir -p /path/to/tmp/
 
+# first only take missense variants in the canonical transcript, with a VEP_canonical annotation, and with at least one of the five in-silico algorithms annotation
 for i in {1..22} X Y; 
-  do awk '/missense_variant/ && /CANONICAL=YES;/ && /VEP_canonical=/' /path/to/annotation/rareAnnot.rare.chr${x} > /path/to/tmp/Missense.annot.chr${i}.txt
-  
+  do awk '/missense_variant/ && /CANONICAL=YES;/ && /VEP_canonical=/ && (/SIFT_pred/ || /Polyphen2_HVAR_pred/ || /Polyphen2_HDIV_pred/ || /MutationTaster_pred/ || /LRT_pred/)' /scratch/richards/guillaume.butler-laporte/WGS/annotationRare/finalAnnot.rare.chr${i}.txt > /path/to/tmp/Missense.annot.chr${i}.txt
+
 #sift  
-  grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(SIFT_pred=[,\.DT]*D[,\.DT]*;)" | grep -o -P "(=[,\.DT]*D[,\.DT]*;)" > /path/to/tmp/sift.count.chr${i}.txt
-  grep "SIFT_pred=[,\.DT]*D[,\.DT]*;" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/siftCanonical.count.chr${i}.txt
-  grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep "SIFT_pred=[,\.DT]*D[,\.DT]*;" | awk '{ print $1 }' > /path/to/tmp/siftVariant.chr${i}.txt
+  awk '( /VEP_canonical=[,\.]*Y/)' /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(SIFT_pred=[,\.DT]*D[,\.DT]*;)" | grep -o -P "(=[,\.DT]*D[,\.DT]*;)" > /path/to/tmp/sift.count.chr${i}.txt
+  awk '( /SIFT_pred=[,\.DT]*D[,\.DT]*;/)' /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/siftCanonical.count.chr${i}.txt
+  awk '( /VEP_canonical=[,\.]*Y/)' /path/to/tmp/Missense.annot.chr${i}.txt | grep "SIFT_pred=[,\.DT]*D[,\.DT]*;" | awk '{ print $1 }' > /path/to/tmp/siftVariant.chr${i}.txt
   paste /path/to/tmp/siftVariant.chr${i}.txt /path/to/tmp/sift.count.chr${i}.txt /path/to/tmp/siftCanonical.count.chr${i}.txt > /path/to/tmp/sift.chr${i}.txt
-  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/sift.chr${i}.txt | sort | uniq > /path/to/tmp/sift.del.canon.chr${i}.txt
+  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/sift.chr${i}.txt | sort | uniq > /path/to/tmp/sift.del.prelim.canon.chr${i}.txt
+  awk '{ if (!(substr($2,$3,1) ~ /D/)) { print $1 } }' /path/to/tmp/sift.chr${i}.txt | sort | uniq > /path/to/tmp/sift.nondel.canon.chr${i}.txt
+  
   
 #polyphen HVAR  
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;)" | grep -o -P "(=[,DPB\.]*D[,DPB\.]*;)"  > /path/to/tmp/pphenHVAR.count.chr${i}.txt
   grep "Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/pphenHVARCanonical.count.chr${i}.txt
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep "Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;" | awk '{ print $1 }' > /path/to/tmp/pphenHVARVariant.chr${i}.txt
-  paste //path/to/tmp/pphenHVARVariant.chr${i}.txt /path/to/tmp/pphenHVAR.count.chr${i}.txt /path/to/tmp/pphenHVARCanonical.count.chr${i}.txt > /path/to/tmp/pphenHVAR.chr${i}.txt
-  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/pphenHVAR.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHVAR.del.canon.chr${i}.txt
+  paste /path/to/tmp/pphenHVARVariant.chr${i}.txt /path/to/tmp/pphenHVAR.count.chr${i}.txt /path/to/tmp/pphenHVARCanonical.count.chr${i}.txt > /path/to/tmp/pphenHVAR.chr${i}.txt
+  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/pphenHVAR.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHVAR.del.prelim.canon.chr${i}.txt
+  awk '{ if (!(substr($2,$3,1) ~ /D/)) { print $1 } }' /path/to/tmp/pphenHVAR.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHVAR.nondel.canon.chr${i}.txt
 
+ 
 #polyphen HDIV
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;)" | grep -o -P "(=[,DPB\.]*D[,DPB\.]*;)"  > /path/to/tmp/pphenHDIV.count.chr${i}.txt
   grep "Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/pphenHDIVCanonical.count.chr${i}.txt
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep "Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;" | awk '{ print $1 }' > /path/to/tmp/pphenHDIVVariant.chr${i}.txt
   paste /path/to/tmp/pphenHDIVVariant.chr${i}.txt /path/to/tmp/pphenHDIV.count.chr${i}.txt /path/to/tmp/pphenHDIVCanonical.count.chr${i}.txt > /path/to/tmp/pphenHDIV.chr${i}.txt
-  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/pphenHDIV.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHDIV.del.canon.chr${i}.txt
+  awk '{ if (substr($2,$3,1) ~ /D/) { print $1 } }' /path/to/tmp/pphenHDIV.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHDIV.del.prelim.canon.chr${i}.txt
+  awk '{ if (!(substr($2,$3,1) ~ /D/)) { print $1 } }' /path/to/tmp/pphenHDIV.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHDIV.nondel.canon.chr${i}.txt
 
+  
 #mutation taster
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;)" | grep -o -P "(=[,ADNP\.]*[AD][,ADNP\.]*;)"  > /path/to/tmp/mutationTaster.count.chr${i}.txt
   grep "MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/mutationTasterCanonical.count.chr${i}.txt
   grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep "MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;" | awk '{ print $1 }' > /path/to/tmp/mutationTasterVariant.chr${i}.txt
   paste /path/to/tmp/mutationTasterVariant.chr${i}.txt /path/to/tmp/mutationTaster.count.chr${i}.txt /path/to/tmp/mutationTasterCanonical.count.chr${i}.txt > /path/to/tmp/mutationTaster.chr${i}.txt
-  awk '{ if (substr($2,$3,1) ~ /[AD]/) { print $1 } }' /path/to/tmp/mutationTaster.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.del.canon.chr${i}.txt
+  awk '{ if (substr($2,$3,1) ~ /[AD]/) { print $1 } }' /path/to/tmp/mutationTaster.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.del.prelim.canon.chr${i}.txt
+  awk '{ if (!(substr($2,$3,1) ~ /[AD]/)) { print $1 } }' /path/to/tmp/mutationTaster.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.nondel.canon.chr${i}.txt
 
+  
 #LRT
-  awk '(/LRT_pred=D;/ && /CANONICAL=YES;/)' /path/to/tmp/Missense.annot.chr${i}.txt | awk '{ print $1 }' | sort | uniq  > /path/to/tmp/LRT.del.canon.chr${i}.txt
+  awk '(/LRT_pred=D;/ && /CANONICAL=YES;/)' /path/to/tmp/Missense.annot.chr${i}.txt | awk '{ print $1 }' | sort | uniq  > /path/to/tmp/LRT.del.prelim.canon.chr${i}.txt 
+  awk '(/LRT_pred=[NU];/ && /CANONICAL=YES;/)' /path/to/tmp/Missense.annot.chr${i}.txt | awk '{ print $1 }' | sort | uniq  > /path/to/tmp/LRT.nondel.canon.chr${i}.txt 
 
 #loftee 
-  awk '{ print $1 }' /scratch/richards/guillaume.butler-laporte/WGS/Masks/M1/M1.annot.chr${i}.txt > /path/to/tmp/LOF.chr${i}.txt
- 
+  awk '{ print $1 }' /path/to/M1/M1.annot.chr${i}.txt > /path/to/tmp/LOF.chr${i}.txt
+
+#find the ones that don't have an annotation (but still deleterious elsewhere)
+#first combine all that are not deleterious in one of the algorithm
+  cat /path/to/tmp/sift.nondel.canon.chr${i}.txt /path/to/tmp/pphenHVAR.nondel.canon.chr${i}.txt /path/to/tmp/pphenHDIV.nondel.canon.chr${i}.txt /path/to/tmp/mutationTaster.nondel.canon.chr${i}.txt /path/to/tmp/LRT.nondel.canon.chr${i}.txt | sort | uniq > /path/to/tmp/nondel.combined.txt
+
+#now for each algorithm obtain the variants that are non annotated AND not-not-deleterious in any other algorithm, then combine them for the final list of potentially deleterious variants.
+#Note that due to Missense.annot.chrZ.txt only containing variants with at least one annotation for the in-silico algorithm, these lists do not contain variants without ANY of the in-silico annotations.
+  awk 'NR==FNR{a[$1];next} { if ( !/SIFT_pred/ && /CANONICAL=YES;/ && !($1 in a)) { print $1 } }' /path/to/tmp/nondel.combined.txt /path/to/tmp/Missense.annot.chr${i}.txt > /path/to/tmp/sift.NotAnnotated.chr${i}.txt 
+  cat /path/to/tmp/sift.NotAnnotated.chr${i}.txt /path/to/tmp/sift.del.prelim.canon.chr${i}.txt | sort | uniq > /path/to/tmp/sift.del.canon.chr${i}.txt 
+  
+  awk 'NR==FNR{a[$1];next} { if (!/Polyphen2_HVAR_pred/ && /CANONICAL=YES;/ && !($1 in a)) { print $1 } }' /path/to/tmp/nondel.combined.txt /path/to/tmp/Missense.annot.chr${i}.txt > /path/to/tmp/pphenHVAR.NotAnnotated.chr${i}.txt   
+  cat /path/to/tmp/pphenHVAR.NotAnnotated.chr${i}.txt /path/to/tmp/pphenHVAR.del.prelim.canon.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHVAR.del.canon.chr${i}.txt
+  
+  awk 'NR==FNR{a[$1];next} { if (!/Polyphen2_HDIV_pred/ && /CANONICAL=YES;/ && !($1 in a)) { print $1 } }' /path/to/tmp/nondel.combined.txt /path/to/tmp/Missense.annot.chr${i}.txt > /path/to/tmp/pphenHDIV.NotAnnotated.chr${i}.txt 
+  cat /path/to/tmp/pphenHDIV.NotAnnotated.chr${i}.txt /path/to/tmp/pphenHDIV.del.prelim.canon.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHDIV.del.canon.chr${i}.txt
+  
+  awk 'NR==FNR{a[$1];next} { if (!/MutationTaster_pred/ && /CANONICAL=YES;/ && !($1 in a)) { print $1 } }' /path/to/tmp/nondel.combined.txt /path/to/tmp/Missense.annot.chr${i}.txt > /path/to/tmp/mutationTaster.NotAnnotated.chr${i}.txt 
+  cat /path/to/tmp/mutationTaster.NotAnnotated.chr${i}.txt /path/to/tmp/mutationTaster.del.prelim.canon.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.del.canon.chr${i}.txt
+  
+  awk 'NR==FNR{a[$1];next} { if (!/LRT_pred/ && /CANONICAL=YES;/ && !($1 in a)) { print $1 } }' /path/to/tmp/nondel.combined.txt /path/to/tmp/Missense.annot.chr${i}.txt > /path/to/tmp/LRT.NotAnnotated.chr${i}.txt
+  cat /path/to/tmp/LRT.NotAnnotated.chr${i}.txt /path/to/tmp/LRT.del.prelim.canon.chr${i}.txt | sort | uniq > /path/to/tmp/LRT.del.canon.chr${i}.txt
+
 #combine for M3 mask 
   comm -12 /path/to/tmp/sift.del.canon.chr${i}.txt /path/to/tmp/pphenHVAR.del.canon.chr${i}.txt | sort | uniq > /path/to/tmp/tmp1.chr${i}.txt
   comm -12 /path/to/tmp/tmp1.chr${i}.txt /path/to/tmp/pphenHDIV.del.canon.chr${i}.txt | sort | uniq > /path/to/tmp/tmp2.chr${i}.txt
   comm -12 /path/to/tmp/tmp2.chr${i}.txt /path/to/tmp/mutationTaster.del.canon.chr${i}.txt | sort | uniq > /path/to/tmp/tmp3.chr${i}.txt
-  comm -12 /path/to/tmp/tmp3.chr${i}.txt /path/to/tmp/LRT.del.canon.chr${i}.txt | sort | uniq > /path/to/tmp/tmp4.chr${i}.txt
+  comm -12 /path/to/tmp/tmp3.chr${i}.txt /path/to/tmp/LRT.del.canon.chr${i}.txt | sort | uniq > /path/to/tmp/tmp4.chr${i}.txt   
   cat /path/to/tmp/tmp4.chr${i}.txt /path/to/tmp/LOF.chr${i}.txt | sort | uniq > /path/to/tmp/M3.ID.chr${i}.txt
 
 #combine for M4 mask
