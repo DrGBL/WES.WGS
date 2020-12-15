@@ -144,13 +144,9 @@ for i in {1..22} X Y;
   awk '{ if (!(substr($2,$3,1) ~ /D/)) { print $1 } }' /path/to/tmp/pphenHDIV.chr${i}.txt | sort | uniq > /path/to/tmp/pphenHDIV.nondel.canon.chr${i}.txt
 
   
-#mutation taster
-  grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;)" | grep -o -P "(=[,ADNP\.]*[AD][,ADNP\.]*;)"  > /path/to/tmp/mutationTaster.count.chr${i}.txt
-  grep "MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;" /path/to/tmp/Missense.annot.chr${i}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > /path/to/tmp/mutationTasterCanonical.count.chr${i}.txt
-  grep "VEP_canonical=[,\.]*Y" /path/to/tmp/Missense.annot.chr${i}.txt | grep "MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;" | awk '{ print $1 }' > /path/to/tmp/mutationTasterVariant.chr${i}.txt
-  paste /path/to/tmp/mutationTasterVariant.chr${i}.txt /path/to/tmp/mutationTaster.count.chr${i}.txt /path/to/tmp/mutationTasterCanonical.count.chr${i}.txt > /path/to/tmp/mutationTaster.chr${i}.txt
-  awk '{ if (substr($2,$3,1) ~ /[AD]/) { print $1 } }' /path/to/tmp/mutationTaster.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.del.prelim.canon.chr${i}.txt
-  awk '{ if (!(substr($2,$3,1) ~ /[AD]/)) { print $1 } }' /path/to/tmp/mutationTaster.chr${i}.txt | sort | uniq > /path/to/tmp/mutationTaster.nondel.canon.chr${i}.txt
+#mutation taster (for this one we use most damaging, since we can't match to transcript.
+  awk '(/MutationTaster_pred=[,ADNP\.]*[AD][,ADNP\.]*;/ && /CANONICAL=YES;/)' /path/to/tmp/Missense.annot.chr${i}.txt | awk '{ print $1 }' | sort | uniq  > /path/to/tmp/mutationTaster.del.prelim.canon.chr${i}.txt
+  awk '(/MutationTaster_pred=[,NP\.]*;/ && /CANONICAL=YES;/)' /path/to/tmp/Missense.annot.chr${i}.txt | awk '{ print $1 }' | sort | uniq  > /path/to/tmp/mutationTaster.nondel.canon.chr${i}.txt 
 
   
 #LRT
