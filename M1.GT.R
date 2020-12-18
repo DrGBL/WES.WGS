@@ -14,10 +14,10 @@ library(tidyverse)
 #funtion to merge the genotypes
 mergeGT<-function(GT){
   nGT<-length(GT)
-  if("1/1" %in% GT){
+  if("1/1" %in% GT | "1|1" %in% GT){
     return("1/1")
   }
-  if("1/0" %in% GT | "0/1" %in% GT | "1/." %in% GT | "./1" %in% GT){
+  if("1/0" %in% GT | "0/1" %in% GT | "1/." %in% GT | "./1" %in% GT | "1|0" %in% GT | "0|1" %in% GT | "1|." %in% GT | ".|1" %in% GT){
     return("0/1")
   }
   return("0/0")
