@@ -7,17 +7,19 @@ import hail as hl
 #tmp_dir is where some of the temporary computations are done. I would make sure to assign it to a folder that does not have a strict data cap.
 hl.init(spark_conf=None, tmp_dir='/path/to/tmp_dir/')
 
-#import the data and sample QC
-hl.import_vcf('/path/to/sequence.file.normID.noChrM.vcf.gz', min_partitions=4, reference_genome='GRCh38', force_bgz=True).write('/hailFiles/hail.full.normID.noChrM.mt', overwrite=True)
+output = '/hailFiles/hail.full.normID.noChrM.mt'
 
-mtAll = hl.read_matrix_table('/hailFiles/hail.full.noChrM.mt')
+#import the data and sample QC
+hl.import_vcf('/path/to/sequence.file.normID.noChrM.vcf.gz', min_partitions=4, reference_genome='GRCh38', force_bgz=True).write(output, overwrite=True)
+
+mtAll = hl.read_matrix_table(output)
 mtAll= mtAll.annotate_entries(AB = (mtAll.AD[1] / hl.sum(mtAll.AD) ))
 mtAll=hl.sample_qc(mtAll)
 mtAll = mtAll.filter_cols((mtAll.sample_qc.call_rate >= 0.97) & (mtAll.sample_qc.dp_stats.mean >= 20))
-mtAll = mtAll.filter_entries( (mtAll.GQ>=20) &
-                 (mtAll.DP >= 10) &
-                 ((mtAll.GT.is_hom_ref() & (mtAll.AB <= 0.1)) |
-                        (mtAll.GT.is_het() & (mtAll.AB >= 0.25) & (mtAll.AB <= 0.75)) |
-                        (mtAll.GT.is_hom_var() & (mtAll.AB >= 0.9))))
+mtAll = mtAll.filter_entries((mtAll.GQ>=20) &
+                             (mtAll.DP >= 10) &
+                             ((mtAll.GT.is_hom_ref() & (mtAll.AB <= 0.1)) |
+                             (mtAll.GT.is_het() & (mtAll.AB >= 0.25) & (mtAll.AB <= 0.75)) |
+                             (mtAll.GT.is_hom_var() & (mtAll.AB >= 0.9))))
                         
 hl.export_vcf(mtAll, '/path/to/sequence.file.normID.GTflt.AB.noChrM.vcf.gz')
