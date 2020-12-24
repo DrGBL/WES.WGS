@@ -52,7 +52,7 @@ for i in {1..22}; do bcftools view -i "%ID=@/M1/M1.variants.chr${i}.txt" /path/t
 #now use R to build the genotype
 Rscript /path/to/M1.GT.R
 for i in {1..22}; do cat headerStep1.txt /M1/finalMask/M1.chr${i}.txt > /M1/finalMask/M1.chr${i}.vcf; done
-for i in {1..22}; do cat headerStep1.txt /M1.1/finalMask/M1.2.chr${i}.txt > /M1.2/finalMask/M1.2.chr${i}.vcf; done
+for i in {1..22}; do cat headerStep1.txt /M1.2/finalMask/M1.2.chr${i}.txt > /M1.2/finalMask/M1.2.chr${i}.vcf; done
 
 #now use plink to build 
 for i in {1..22}; do plink --vcf /M1/finalMask/M1.chr${i}.vcf --make-bed --out /M1/finalMask/M1.chr${i}; done
