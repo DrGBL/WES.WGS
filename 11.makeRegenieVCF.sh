@@ -16,8 +16,7 @@ for i in {1..22} X Y; do awk '!/AFR_AF=0\.0[1-9]|AFR_AF=0\.[1-8][0-9][0-9]|AFR_A
     !/gnomAD_FIN_AF=0\.0[1-9]|gnomAD_FIN_AF=0\.[1-8][0-9][0-9]|gnomAD_FIN_AF=0\.9[0-8]/ &&
     !/gnomAD_NFE_AF=0\.0[1-9]|gnomAD_NFE_AF=0\.[1-8][0-9][0-9]|gnomAD_NFE_AF=0\.9[0-8]/ &&
     !/gnomAD_OTH_AF=0\.0[1-9]|gnomAD_OTH_AF=0\.[1-8][0-9][0-9]|gnomAD_OTH_AF=0\.9[0-8]/ &&
-    !/gnomAD_SAS_AF=0\.0[1-9]|gnomAD_SAS_AF=0\.[1-8][0-9][0-9]|gnomAD_SAS_AF=0\.9[0-8]/' | 
-    /path/to/annotation/finalAnnot.chr${x}.txt > /path/to/annotation/rareAnnot.rare.chr${x}.txt;
+    !/gnomAD_SAS_AF=0\.0[1-9]|gnomAD_SAS_AF=0\.[1-8][0-9][0-9]|gnomAD_SAS_AF=0\.9[0-8]/' /path/to/annotation/finalAnnot.chr${i}.txt > /path/to/annotation/rareAnnot.rare.chr${i}.txt;
 done
 
 # then reformat the exclusion list
@@ -73,6 +72,8 @@ plink --merge-list /M1.2/finalMask/ForMerge.list --out /M1.2/finalMask/MergeM1.2
 ###### M2 note that this uses max AF among 1000 genomes, ESP, and gnomAD populations, combined. ######
 mkdir -p M2
 mkdir -p M2/finalMask
+mkdir -p M2.2
+mkdir -p M2.2/finalMask
 #first filter for the correct variants
 for i in {1..22}; do awk '(/LoF=HC/ || /missense_variant/) && /CANONICAL=YES/' /path/to/annotation/rareAnnot.chr${i}.txt > /M2/M2.annot.chr${i}.txt; done
 
