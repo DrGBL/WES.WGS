@@ -17,7 +17,7 @@ for i in {1..22} X Y; do awk '!/AFR_AF=0\.0[1-9]|AFR_AF=0\.[1-8][0-9][0-9]|AFR_A
     !/gnomAD_NFE_AF=0\.0[1-9]|gnomAD_NFE_AF=0\.[1-8][0-9][0-9]|gnomAD_NFE_AF=0\.9[0-8]/ &&
     !/gnomAD_OTH_AF=0\.0[1-9]|gnomAD_OTH_AF=0\.[1-8][0-9][0-9]|gnomAD_OTH_AF=0\.9[0-8]/ &&
     !/gnomAD_SAS_AF=0\.0[1-9]|gnomAD_SAS_AF=0\.[1-8][0-9][0-9]|gnomAD_SAS_AF=0\.9[0-8]/' | 
-    /path/to/annotation/finalAnnot.chr${x}.txt > /path/to/annotation/rareAnnot.rare.chr${x}.txt;
+    /path/to/annotation/finalAnnot.chr${i}.txt > /path/to/annotation/rareAnnot.rare.chr${i}.txt;
 done
 
 # then reformat the exclusion list
