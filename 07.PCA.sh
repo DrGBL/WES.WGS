@@ -18,7 +18,7 @@ plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 
 
 plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
---extract /PCA/commonAllelesPruned.in \
+--extract /PCA/commonAllelesPruned.prune.in \
 --pca 10 \
 --out /PCA/commonPCA.txt
 
@@ -39,6 +39,6 @@ plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 
 
 plink --vcf /path/to/sequence.file.Eur.normID.rehead.GTflt.AB.noChrM.vcf.gz \
---extract /PCA/rareAllelesPruned.in \
+--extract /PCA/rareAllelesPruned.prune.in \
 --pca 20 \
 --out /PCA/rarePCA.txt
