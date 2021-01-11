@@ -9,9 +9,9 @@
 #2) from this file, only use the variants also found in your specific cohort, and further prune them to MAF over 10% and in linkage equilibrium
 #3) from your cohort variant file, only select those pruned variants from step 2
 #4) merge the 1000G file and you cohort's file, with only those pruned variants
-#5) perform PCA on this variant set
+#5) perform PCA on 1000G using this variant set, and project your cohort's genotype on the resulting PCs
 #6) train a random forest with 6 principal components on the 1000G dataset
-#7) predict the ancestry in your cohort using that trained random forest
+#7) predict the ancestry in your cohort using that trained random forest and your cohort's projection on 1000G's PCs
 #8) output files named like "afrIDsPCA.txt", for the study IDs of individuals predicted to be of a certain ancestry (here african, for example).
 
 #first, download the GRCh38 1000G data (the bandwitdh was slow when I tried, so it can be long)
@@ -54,7 +54,6 @@ for chr in {1..22}; do
       --bcf ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased.bcf \
       --keep-allele-order \
       --vcf-idspace-to _ \
-      --const-fid \
       --allow-extra-chr 0 \
       --split-x b38 no-fail \
       --make-bed \
@@ -100,9 +99,17 @@ plink --vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz \
 printf "Merge\n./cohortSample/cohortSample" > ForMergeFull.list
 
 plink --merge-list ForMergeFull.list --out MergeFullForPCA ;
- 
-#now do PCA on combined file
-plink --bfile MergeFullForPCA --pca
+
+#now divide between 1000G and cohort samples
+awk '{ print $1,$2 }' Merge.fam | awk '$(NF+1) = "1000G"' > 1000G.cluster.txt
+awk '{ print $1,$2 }' cohortSample/cohortSample.fam | awk '$(NF+1) = "Cohort"' > cohort.cluster.txt
+cat 1000G.cluster.txt cohort.cluster.txt > clusters.txt
+
+#now do PCA on 1000G dataset, and project the cohort genotype on these PCs
+plink --bfile MergeFullForPCA \
+ --pca-cluster-names 1000G \
+ --pca \
+ --within clusters.txt
 
 
 #the following happens in R  
