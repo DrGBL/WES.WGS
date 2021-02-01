@@ -10,7 +10,7 @@ Every effort was made to prioritize code clarity over efficiency, and there are 
 
 The code is numbered to give the order which it was ran at McGill, however these aren't always necessary, and you can sometimes jump ahead.
 
-Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with LOFTEE and dbNSFP plugins), and hail (python 3.7 module)
+Dependencies: R (with tidyverse), bcftools, plink, regenie, VEP (with dbNSFP plugin), and hail (python 3.7 module)
 
 ***The most important tweak to be done locally is to modify the path names in each of the functions, depending on how your cluster works. That is, the functions below will not work "out-of-the-box", you still need to tell them where to save or load some of the files they output or require as input.***
 
@@ -26,13 +26,13 @@ Here's a summary of what each function does, with more comments in each specific
 
 `04.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
 
+`06.splitChrom.sh`: here I split the vcf file by chromosome, as the next few functions were too slow otherwise.
+
+`07.finalAnnot.sh`: uses VEP to annotate variants. This requires the dbNSFP plugins.
+
 ***Functions below are in process of active update (Jan 31, 2020)***
 
-`07.PCA.sh`: calculates common and rare variant PCAs for your selected samples
-
-`08.splitChrom.sh`: here I split the vcf file by chromosome, as the next few functions were too slow otherwise.
-
-`09.finalAnnot.sh`: uses VEP to annotate variants. This requires LOFTEE and dbNSFP plugins.
+`07.PCA.sh`: calculates common and rare variant PCAs for your selected samples, to be used in the covar input file in regenie.
 
 `10.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
