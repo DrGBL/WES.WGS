@@ -4,7 +4,10 @@
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
-bcftools norm -m -any --check-ref w -f /path/to/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna /path/to/sequence.file.noChrM.vcf.gz -Ou | \
+#the first line below lists the chromosome you want to keep, I removed chromosome Y and mitochondrial chromosome for the rest of the analysis.
+bcftools filter -r chr1,chr2,chr3,chr4,chr5,chr6,chr7,chr8,chr9,chr10,chr11,chr12,chr13,chr14,chr15,chr16,chr17,chr18,chr19,chr20,chr21,chr22,chrX \
+  /path/to/sequence.file.noChrM.vcf.gz -Ou | \
+  bcftools norm -m -any --check-ref w -f /path/to/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna -Ou | \
   bcftools annotate --set-id '%CHROM:%POS:%REF:%FIRST_ALT' -Oz > /path/to/sequence.file.normID.noChrM.vcf.gz
 tabix -p vcf /path/to/sequence.file.normID.noChrM.vcf.gz
 
