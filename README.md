@@ -18,15 +18,13 @@ Here's a summary of what each function does, with more comments in each specific
 
 `exclusion.list.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants list.
 
-`01.autosomalXY.sh`: removes mitochondrial DNA (chrM).
+`01.norm.ID.sh`: normalizes and left aligns variants using the reference genome. Also removes the Y chromosome and the mitochondrial chromosomes.
 
-`02.norm.ID.sh`: normalizes and left aligns variants using the reference genome.
+`02.hail.py`: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
 
-`03.hail.py`: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
+`03.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
-`04.reheader.sh`: advanced hail functions did not work on our local cluster, so the rest of our analysis was done on regular vcf. This function reheaders the meta-data the vcf obtained from the hail QC. It will require some local tweaking.
-
-`05.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
+***Functions below are in process of active update (Jan 31, 2020)***
 
 `06.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
 
