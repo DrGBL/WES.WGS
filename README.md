@@ -26,13 +26,13 @@ Here's a summary of what each function does, with more comments in each specific
 
 `04.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
 
+`05.PCA.sh`: calculates common and rare variant PCAs for your selected samples, to be used in the covar input file in regenie.
+
 `06.splitChrom.sh`: here I split the vcf file by chromosome, as the next few functions were too slow otherwise.
 
 `07.finalAnnot.sh`: uses VEP to annotate variants. This requires the dbNSFP plugins.
 
 ***Functions below are in process of active update (Jan 31, 2020)***
-
-`07.PCA.sh`: calculates common and rare variant PCAs for your selected samples, to be used in the covar input file in regenie.
 
 `10.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
