@@ -32,9 +32,9 @@ Here's a summary of what each function does, with more comments in each specific
 
 `07.finalAnnot.sh`: uses VEP to annotate variants. This requires the dbNSFP plugins.
 
-***Functions below are in process of active update (Jan 31, 2020)***
+`08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
-`10.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
+***Functions below are in process of active update (Jan 31, 2020)***
 
 `11.makeRegenieVCF.sh`: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie. This function depends on 4 R files: `M1.GT.R`, `M2.GT.R`, `M3.GT.R`, and `M4.GT.R`.
 
