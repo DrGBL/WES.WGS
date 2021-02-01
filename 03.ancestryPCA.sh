@@ -56,7 +56,7 @@ done
 
 #Obtain the list of variants for ancestry inference PCA
 for chr in {1..22}; do
-  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | \
+  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.bgz -Ou | \
   bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
 done
 
@@ -90,7 +90,7 @@ awk '{ print $2 }' Merge.bim > MergeVariants.txt
 
 mkdir -p cohortSample
 
-plink --vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz \
+plink --vcf /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.bgz \
  --noweb \
  --extract MergeVariants.txt \
  --make-bed \
