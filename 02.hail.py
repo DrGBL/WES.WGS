@@ -9,6 +9,7 @@ hl.init(spark_conf=None, tmp_dir='/path/to/tmp_dir/')
 
 #import the data and sample QC
 hl.import_vcf('/path/to/sequence.file.normID.noChrM.vcf.gz', min_partitions=4, reference_genome='GRCh38', force_bgz=True).write('/hailFiles/hail.full.normID.noChrM.mt', overwrite=True)
+metaData = hl.get_vcf_metadata('/path/to/sequence.file.normID.noChrM.vcf.gz')
 
 mtAll = hl.read_matrix_table('/hailFiles/hail.full.noChrM.mt')
 mtAll= mtAll.annotate_entries(AB = (mtAll.AD[1] / hl.sum(mtAll.AD) ))
@@ -20,4 +21,4 @@ mtAll = mtAll.filter_entries( (mtAll.GQ>=20) &
                         (mtAll.GT.is_het() & (mtAll.AB >= 0.25) & (mtAll.AB <= 0.75)) |
                         (mtAll.GT.is_hom_var() & (mtAll.AB >= 0.9))))
                         
-hl.export_vcf(mtAll, '/path/to/sequence.file.normID.GTflt.AB.noChrM.vcf.gz')
+hl.export_vcf(mtAll, '/path/to/sequence.file.normID.GTflt.AB.noChrM.vcf.bgz', metadata=metaData, tabix=True)
