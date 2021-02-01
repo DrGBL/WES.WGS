@@ -30,12 +30,6 @@ wget ftp://ftp.1000genomes.ebi.ac.uk/vol1/ftp/technical/working/20130606_sample_
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
-#Obtain the list of variants for ancestry inference PCA
-for chr in {1..22}; do
-  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | \
-  bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
-done
-
 #convert 1000G vcf to bcf, normalizing and left-aligning variants
 for chr in {1..22}; do
     bcftools norm -m-any --check-ref w -f GCA_000001405.15_GRCh38_no_alt_analysis_set.fna \
@@ -60,7 +54,13 @@ for chr in {1..22}; do
       --out ALL.chr"${chr}".shapeit2_integrated_v1a.GRCh38.20181129.phased ;
 done
 
-#prune variants for LD
+#Obtain the list of variants for ancestry inference PCA
+for chr in {1..22}; do
+  bcftools filter -r chr${chr} /path/to/sequence.file.normID.rehead.GTflt.AB.noChrM.vcf.gz -Ou | \
+  bcftools query -f "%ID\n" > /path/to/variants.chr${chr}.txt;
+done
+
+#prune for common variants in linkage equilibrium, and only keeping variants also in your cohort
 mkdir -p Pruned ;
 
 for chr in {1..22}; do
