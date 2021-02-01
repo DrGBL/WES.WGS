@@ -24,9 +24,9 @@ Here's a summary of what each function does, with more comments in each specific
 
 `03.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
 
-***Functions below are in process of active update (Jan 31, 2020)***
+`04.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
 
-`06.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
+***Functions below are in process of active update (Jan 31, 2020)***
 
 `07.PCA.sh`: calculates common and rare variant PCAs for your selected samples
 
