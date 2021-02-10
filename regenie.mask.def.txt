@@ -1,0 +1,3 @@
+M1 pLoF
+M3 pLoF,moderate.non.missense,missense.5in5
+M4 pLoF,moderate.non.missense,missense.1in5,missense.5in5
