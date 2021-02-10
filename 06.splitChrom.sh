@@ -4,10 +4,10 @@
 #path to QCed vcf restricted to given ancestry
 pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
 
-#path to split chromosomes output
-pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/splitChrom/allSamples.chr${x}.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
-
 for chr in {1..22} X; do
-  bcftools filter -r chr${x}  $pathAncestry -Oz > ${pathSplit}
+  #path to split chromosomes output
+  pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/tmp/allSamples.chr"${chr}".Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
+  
+  bcftools filter -r chr${chr}  $pathAncestry -Oz > ${pathSplit}
   tabix -p vcf ${pathSplit};
 done
