@@ -1,10 +1,17 @@
-#this function outputs PCA results from common and rare variants from the selected ancestry obtained in the previous step.
-#again I assume european ancestry here, as per previous step.
 
-mkdir -p PCA
+#this function outputs PCA results from common and rare variants from the selected ancestry obtained in the previous step.
+#these PCs will be used in the covar file input in regenie (code to build that file is not shown in the git, since it's too dependent on how your data is stored
+
+#paths
+
+#path to QCed vcf restricted to ancestry of interest
+pathAncestry = /scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
+
+#path to ouput directory
+pathPCA = /scratch/richards/guillaume.butler-laporte/WGS/PCA/
 
 #common
-plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
+plink --vcf $pathAncestry \
 --biallelic-only strict \
 --chr 1-22 \
 --geno 0.05 \
@@ -14,18 +21,18 @@ plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
 --keep-allele-order \
 --mac 5 \
 --maf 0.01 \
---out /PCA/commonAllelesPruned
+--out "${pathPCA}"commonAllelesPruned
 
 
-plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
---extract /PCA/commonAllelesPruned.in \
+plink --vcf $pathAncestry \
+--extract "${pathPCA}"commonAllelesPruned.prune.in \
 --pca 10 \
---out /PCA/commonPCA.txt
+--out "${pathPCA}"commonPCA.txt
 
 
-#rare, given the relatively small size of my cohort, I set a MAC threshold of 2. This can be adjusted by each cohort.
+#rare
 
-plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
+plink --vcf $pathAncestry \
 --biallelic-only strict \
 --chr 1-22 \
 --geno 0.05 \
@@ -35,10 +42,10 @@ plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
 --keep-allele-order \
 --max-maf 0.01 \
 --mac 2 \
---out /PCA/rareAllelesPruned
+--out "${pathPCA}"rareAllelesPruned
 
 
-plink --vcf /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz \
---extract /PCA/rareAllelesPruned.in \
+plink --vcf $pathAncestry \
+--extract "${pathPCA}"rareAllelesPruned.prune.in \
 --pca 20 \
---out /PCA/rarePCA.txt
+--out "${pathPCA}"rarePCA.txt
