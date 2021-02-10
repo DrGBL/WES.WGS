@@ -8,7 +8,9 @@
 #paths
 #path to where the many temporary files will be stored
 pathTmp=/scratch/richards/guillaume.butler-laporte/WGS/tmp/
-cd $pathTmp
+
+#path to the regenie inputs
+pathReg=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/
 
 for x in {1..22} X; do
 
@@ -122,6 +124,6 @@ pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/splitChrom/allSamples.c
  done
  
 #now build the actual regenie inputs
-cat above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc* > /scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/regenie.aaf.file.txt
+cat above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc* > "{$pathReg}"regenieInputs/regenie.aaf.file.txt
 rm above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc*
  
