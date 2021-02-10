@@ -44,10 +44,10 @@ regenie \
   --bed $pathPlink \
   --aaf-bins 0.01,0.001 \
   --build-mask 'max' \
-  --mask-def "{$pathReg}"regenie.mask.def.txt \
-  --set-list "{$pathReg}"regenie.set.list.txt \
-  --anno-file "{$pathReg}"regenie.anno.file.txt \
-  --aaf-file "{$pathReg}"regenie.aaf.file.txt \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
   --bt \
   --htp \
   --firth --approx \
@@ -67,14 +67,13 @@ regenie \
   --bed $pathPlink \
   --aaf-bins 0.01,0.001 \
   --build-mask 'max' \
-  --mask-def "{$pathReg}"regenie.mask.def.txt \
-  --set-list "{$pathReg}"regenie.set.list.txt \
-  --anno-file "{$pathReg}"regenie.anno.file.txt \
-  --aaf-file "{$pathReg}"regenie.aaf.file.txt \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
   --bt \
   --htp \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.common
-  
