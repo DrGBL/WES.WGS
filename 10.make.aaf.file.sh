@@ -124,6 +124,6 @@ pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/splitChrom/allSamples.c
  done
  
 #now build the actual regenie inputs
-cat above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc* > "{$pathReg}"regenieInputs/regenie.aaf.file.txt
+cat above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc* > "${pathReg}"regenieInputs/regenie.aaf.file.txt
 rm above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc*
  
