@@ -6,7 +6,7 @@ pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normI
 
 for chr in {1..22} X; do
   #path to split chromosomes output
-  pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/tmp/allSamples.chr"${chr}".Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
+  pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/splitChrom/allSamples.chr"${chr}".Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
   
   bcftools filter -r chr${chr}  $pathAncestry -Oz > ${pathSplit}
   tabix -p vcf ${pathSplit};
