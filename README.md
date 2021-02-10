@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***January 11, 2021: changes will be made to the code in anticipation of the second data freeze, this code is therefore left as a reference, but multiple changes are expected***
+***February 10, 2021: changes were made to use the new analysis protocol, and the new Regenie version. If you find bugs, please let me know.***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1Ouii904IqUArMECXHWynZjBiZ8QO-r2-3rsymB815Bo/edit
 
@@ -10,9 +10,9 @@ Every effort was made to prioritize code clarity over efficiency, and there are 
 
 The code is numbered to give the order which it was ran at McGill, however these aren't always necessary, and you can sometimes jump ahead.
 
-Dependencies: R (with tidyverse), bcftools, plink (v1.9), regenie, VEP (with dbNSFP plugin), and hail (python 3.7 module)
+Dependencies: R (with tidyverse), bcftools, plink (v1.9), regenie (v2), VEP (with dbNSFP plugin), and hail (python 3.7 module)
 
-***The most important tweak to be done locally is to modify the path names in each of the functions, depending on how your cluster works. That is, the functions below will not work "out-of-the-box", you still need to tell them where to save or load some of the files they output or require as input.***
+***Again, the most important tweak to be done locally is to modify the path names in each of the functions, depending on how your cluster works. However, I've made efforts to make these easy to spot and modify. That is, the functions below will not work "out-of-the-box", you still need to tell them where to save or load some of the files they output or require as input.***
 
 Here's a summary of what each function does, with more comments in each specific file:
 
@@ -34,13 +34,9 @@ Here's a summary of what each function does, with more comments in each specific
 
 `08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
-***Functions below are in process of active update (Jan 31, 2020)***
+`09.variantPrep.sh`: this uses VEP annotations to build the --set-list and --anno-file regenie step 2 inputs.
 
-`11.makeRegenieVCF.sh`: this is where we build the different masks, and code genes as though they were SNPs, to be used in step 2 of regenie. This function depends on 4 R files: `M1.GT.R`, `M2.GT.R`, `M3.GT.R`, and `M4.GT.R`.
+`10.make.aaf.file.sh`: this uses VEP annotations and your cohort's QCed vcf file to assign the correct allele frequencies to each variants used in the burden tests.
 
-`12.regenieAnalysis.sh`: this is where the magic happens with regenie.
-
-
-
-
+`11.regenieAnalysis.sh`: this is where we use regenie to perform the burden tests.
 
