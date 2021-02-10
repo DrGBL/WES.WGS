@@ -5,10 +5,10 @@
 #paths
 
 #path to QCed vcf restricted to ancestry of interest
-pathAncestry = /scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
+pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
 
 #path to ouput directory
-pathPCA = /scratch/richards/guillaume.butler-laporte/WGS/PCA/
+pathPCA=/scratch/richards/guillaume.butler-laporte/WGS/PCA/
 
 #common
 plink --vcf $pathAncestry \
