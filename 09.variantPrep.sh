@@ -5,8 +5,7 @@
 #paths
 #path to where the many temporary files will be stored
 pathTmp=/scratch/richards/guillaume.butler-laporte/WGS/tmp/
-cd $pathTmp
-mkdir -p tmp
+mkdir -p "{$pathTmp}"tmp
 
 #path to the regenie inputs
 pathReg=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/
