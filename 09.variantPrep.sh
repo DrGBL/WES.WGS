@@ -61,7 +61,7 @@ for x in {1..22} X; do
   awk '( /SIFT_pred=[,\.DT]*D[,\.DT]*;/)' "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > "${pathTmp}"tmp/tmp.siftCanonical.count.chr${x}.txt
   awk '( /VEP_canonical=[,\.]*Y/)' "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep "SIFT_pred=[,\.DT]*D[,\.DT]*;" | awk '{ print $1, $4 }' > "${pathTmp}"tmp/tmp.siftVariant.chr${x}.txt
   paste "${pathTmp}"tmp/tmp.siftVariant.chr${x}.txt "${pathTmp}"tmp/tmp.sift.count.chr${x}.txt "${pathTmp}"tmp/tmp.siftCanonical.count.chr${x}.txt > "${pathTmp}"tmp/sift.chr${x}.txt
-  rm "${pathTmp}"tmp/tmp.sift*
+  rm "${pathTmp}"tmp/tmp.siftVariant.chr${x}.*
   awk '{ if (substr($3,$4,1) ~ /D/) { print $1, $2 } }' "${pathTmp}"tmp/sift.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/sift.chr${x}.del.prelim.canon.txt
   awk '{ if (!(substr($3,$4,1) ~ /D/)) { print $1, $2 } }' "${pathTmp}"tmp/sift.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/sift.chr${x}.nondel.canon.txt
   
@@ -78,7 +78,7 @@ for x in {1..22} X; do
   grep "Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;" "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > "${pathTmp}"tmp/tmp.pphenHVARCanonical.count.chr${x}.txt
   grep "VEP_canonical=[,\.]*Y" "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep "Polyphen2_HVAR_pred=[,DPB\.]*D[,DPB\.]*;" | awk '{ print $1, $4 }' > "${pathTmp}"tmp/tmp.pphenHVARVariant.chr${x}.txt
   paste "${pathTmp}"tmp/tmp.pphenHVARVariant.chr${x}.txt "${pathTmp}"tmp/tmp.pphenHVAR.count.chr${x}.txt "${pathTmp}"tmp/tmp.pphenHVARCanonical.count.chr${x}.txt > "${pathTmp}"tmp/pphenHVAR.chr${x}.txt
-  rm "${pathTmp}"tmp/tmp.pphenHVAR*
+  rm "${pathTmp}"tmp/tmp.pphenHVARVariant.chr${x}.*
   awk '{ if (substr($3,$4,1) ~ /D/) { print $1, $2 } }' "${pathTmp}"tmp/pphenHVAR.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/pphenHVAR.chr${x}.del.prelim.canon.txt
   awk '{ if (!(substr($3,$4,1) ~ /D/)) { print $1, $2 } }' "${pathTmp}"tmp/pphenHVAR.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/pphenHVAR.chr${x}.nondel.canon.txt
 
@@ -87,7 +87,7 @@ for x in {1..22} X; do
   grep "Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;" "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep -o -P "(VEP_canonical=.*)" | grep -o -P "(=[,\.]*Y)" | awk '{ print length }' > "${pathTmp}"tmp/tmp.pphenHDIVCanonical.count.chr${x}.txt
   grep "VEP_canonical=[,\.]*Y" "${pathTmp}"tmp/Missense.annot.chr${x}.txt | grep "Polyphen2_HDIV_pred=[,DPB\.]*D[,DPB\.]*;" | awk '{ print $1, $4 }' > "${pathTmp}"tmp/tmp.pphenHDIVVariant.chr${x}.txt
   paste "${pathTmp}"tmp/tmp.pphenHDIVVariant.chr${x}.txt "${pathTmp}"tmp/tmp.pphenHDIV.count.chr${x}.txt "${pathTmp}"tmp/tmp.pphenHDIVCanonical.count.chr${x}.txt > "${pathTmp}"tmp/pphenHDIV.chr${x}.txt
-  rm "${pathTmp}"tmp/tmp.pphenHDIV*
+  rm "${pathTmp}"tmp/tmp.pphenHDIVVariant.chr${x}.*
   awk '{ if (substr($3,$4,1) ~ /D/) { print $1, $2 } }' "${pathTmp}"tmp/pphenHDIV.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/pphenHDIV.chr${x}.del.prelim.canon.txt
   awk '{ if (!(substr($3,$4,1) ~ /D/)) { print $1, $2 } }' "${pathTmp}"tmp/pphenHDIV.chr${x}.txt | sort | uniq > "${pathTmp}"tmp/pphenHDIV.chr${x}.nondel.canon.txt
 
@@ -146,14 +146,14 @@ for x in {1..22} X; do
     awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.5in5.chr${x}.txt -  > "${pathTmp}"missense.0in5.chr${x}.txt
 
 
-  rm "${pathTmp}"tmp/LRT.chr${x}*
-  rm "${pathTmp}"tmp/mutationTaster.chr${x}*
-  rm "${pathTmp}"tmp/pphenHDIV.chr${x}*
-  rm "${pathTmp}"tmp/pphenHVAR.chr${x}*
-  rm "${pathTmp}"tmp/sift.chr${x}*
-  rm "${pathTmp}"tmp/tmp.chr${x}*
-  rm "${pathTmp}"tmp/nondel.combined.chr${x}*
-  rm "${pathTmp}"tmp/Missense.annot.chr${x}*;
+  rm "${pathTmp}"tmp/LRT.chr${x}.*
+  rm "${pathTmp}"tmp/mutationTaster.chr${x}.*
+  rm "${pathTmp}"tmp/pphenHDIV.chr${x}.*
+  rm "${pathTmp}"tmp/pphenHVAR.chr${x}.*
+  rm "${pathTmp}"tmp/sift.chr${x}.*
+  rm "${pathTmp}"tmp/tmp.chr${x}.*
+  rm "${pathTmp}"tmp/nondel.combined.chr${x}.*
+  rm "${pathTmp}"tmp/Missense.annot.chr${x}.*;
 done
 
 #now build the necessary regenie step 2 inputs
