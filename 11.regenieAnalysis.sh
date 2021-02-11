@@ -36,15 +36,13 @@ regenie \
 
 
 #with the local and gnomAD exclusion only
-#note that for the aaf-bins, I took 0.011 and 0.0011 as the threshold simply because regenie uses "exclusive smaller than".
-#and as a reminder the aaf-file set allele frequencies to 0.1, 0.005, and 0.001 only.
 regenie \
   --step 2 \
   --minMAC 1 \
   --covarFile $pathCov \
   --phenoFile $pathPheno \
   --bed $pathPlink \
-  --aaf-bins 0.011,0.0011 \
+  --aaf-bins 0.01,0.001 \
   --build-mask 'max' \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
@@ -67,7 +65,7 @@ regenie \
   --covarFile $pathCov \
   --phenoFile $pathPheno \
   --bed $pathPlink \
-  --aaf-bins 0.011,0.0011 \
+  --aaf-bins 0.01,0.001 \
   --build-mask 'max' \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
