@@ -139,6 +139,12 @@ for x in {1..22} X; do
     awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.5in5.chr${x}.txt - | \
     awk '$(NF+1) = "missense.1in5"'> "${pathTmp}"missense.1in5.chr${x}.txt
 
+#file for missense without in silico algorithm support
+  awk '{ print $1, $4 }' "${pathTmp}"tmp/Missense.annot.chr${x}.txt | \
+    sort | uniq | \
+    awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.1in5.chr${x}.txt - | \
+    awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.5in5.chr${x}.txt -  > "${pathTmp}"missense.0in5.chr${x}.txt
+
 
   rm "${pathTmp}"tmp/LRT.chr${x}*
   rm "${pathTmp}"tmp/mutationTaster.chr${x}*
@@ -151,8 +157,8 @@ for x in {1..22} X; do
 done
 
 #now build the necessary regenie step 2 inputs
-cat pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* > "${pathReg}"regenie.anno.file.txt
-rm pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr*
+cat pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr* > "${pathReg}"regenie.anno.file.txt
+rm pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr*
 
 cat regenie.set.list.chr* > "${pathReg}"regenie.set.list.txt
 rm regenie.set.list.chr*
