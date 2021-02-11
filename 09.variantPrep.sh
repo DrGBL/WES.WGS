@@ -143,7 +143,8 @@ for x in {1..22} X; do
   awk '{ print $1, $4 }' "${pathTmp}"tmp/Missense.annot.chr${x}.txt | \
     sort | uniq | \
     awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.1in5.chr${x}.txt - | \
-    awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.5in5.chr${x}.txt -  > "${pathTmp}"missense.0in5.chr${x}.txt
+    awk 'NR==FNR{a[$1]=$1;next} !($1 in a) {print $1, $2}' "${pathTmp}"missense.5in5.chr${x}.txt - | \
+    awk '$(NF+1) = "missense.0in5"' > "${pathTmp}"missense.0in5.chr${x}.txt
 
 
   rm "${pathTmp}"tmp/LRT.chr${x}.*
