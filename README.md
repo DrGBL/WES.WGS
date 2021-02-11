@@ -22,7 +22,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 `02.hail.py`: QC using hail. At the BQC sex imputation and QC had been done by our genome center, as well as the variant recalibration, so they are omitted here. For the full hail QC code can be found here: https://github.com/mkveerapen/covid19_sequencing
 
-`03.ancestryPCA.sh`: uses 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected.
+`03.ancestryPCA.sh` and `03.ancestryPCA.R`: use 1000G to train a random forest classifier to infer continental ancestry in your cohort. Note that this may not be fully necessary if homogeneous ancestry is expected, and may not be sufficient if the cohort has a very admixed ancestry either.
 
 `04.selectAncestry.sh`: subsets samples from a specific ancestry as obtained in the previous function (here I used europeans as an example)
 
