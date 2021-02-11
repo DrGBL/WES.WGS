@@ -105,7 +105,7 @@ pathSplit=/scratch/richards/guillaume.butler-laporte/WGS/splitChrom/allSamples.c
     bcftools filter -e "%ID=@"${pathTmp}"gnomad.01.to.1perc.chr${x}.txt" -Ou | \
     bcftools query -f '%ID \n' | \
     sort | uniq | \
-    awk '$(NF+1) = "0.001"' > "${pathTmp}"deleterious.below.0.1perc.chr${x}.txt
+    awk '$(NF+1) = "0.0005"' > "${pathTmp}"deleterious.below.0.1perc.chr${x}.txt
 
 # 4) of the remaining variants, find the ones with a gnomAD/ESP MAF more than 0.1% (and hence less than 1%). Give them an allele frequency of 0.5% for our purposes.
 
