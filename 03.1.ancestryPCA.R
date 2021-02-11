@@ -88,6 +88,7 @@ dataPred$Prediction<-rep(NA, nrow(dataPred))
 dataPred$Prediction<-predict(rf_classifier,dataPred[,c("PC1","PC2","PC3","PC4","PC5","PC6")])
 
 #if you want to see the results, here I provide an example with AFR ancestry
+#from here, if the population is very admixted, other algorithms can be applied, or at least visual inspection can be done to remove clear outliers.
 #the blank dots should cluster with the yellow dots (for AFR)
 dataAfr<-dataPred %>% filter(Prediction=="AFR")
 plot(dataRF[,2], dataRF[,3],
