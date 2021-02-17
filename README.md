@@ -16,7 +16,7 @@ Dependencies: R (with tidyverse), bcftools, plink (v1.9), regenie (v2), VEP (wit
 
 Here's a summary of what each function does, with more comments in each specific file:
 
-`exclusion.list.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants list.
+`exclusion.list.sh`: this is the suggested code to obtain the list of variants to be used to build our list of exclusion variants.
 
 `01.norm.ID.sh`: normalizes and left aligns variants using the reference genome. Also removes the Y chromosome and the mitochondrial chromosomes.
 
