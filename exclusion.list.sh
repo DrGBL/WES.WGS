@@ -4,9 +4,6 @@
 # Then if pipes it to another bcftools function to query only the information that is required. You can add more if needed.
 # The result of this list will be used for the exclusion list in the MAF<1% analysis
 
-# Note that in order to make it a smaller file, and since we will be using whole exome anyway, if you are using WGS you can restrict the analysis to the exome sequences in the exomePos.txt (bed format)
-# I provide an example of such a file (the one I used for the BQC19) on the git, based on GENCODE reference: https://www.gencodegenes.org/
-
 bcftools view -R /path/to/exomePos.txt --min-af 0.01:minor \
   /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz | \
   bcftools query -H -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\n' > common.one.perc.ExomeEur.txt
