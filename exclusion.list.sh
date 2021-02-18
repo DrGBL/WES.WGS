@@ -1,4 +1,5 @@
-# This function requires normalized and left-aligned variants that passed QC. In the pipeline on this github, this is done after the hail QC.
+# This function requires normalized and left-aligned variants that passed QC. In the pipeline on this github, this is done after the hail QC if the cohort has
+# homogeneous ancestry, or after the 04.selectAncestry.sh, since it needs to be done separately on each ancestry.
 
 # In the first part, it filters for MAF>1% (the --min-af 0.01:minor part) i.e. AF between 1% and 99%
 # Then if pipes it to another bcftools function to query only the information that is required. You can add more if needed.
