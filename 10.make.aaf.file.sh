@@ -120,9 +120,9 @@ for x in {1..22} X; do
 
  rm "${pathTmp}"annot.deleterious.below.1perc.chr${x}.txt
  rm "${pathTmp}"cohort.above.1perc.chr${x}.txt
- rm "${pathTmp}"gnomad.01.to.1perc.chr${x}*
- rm "${pathTmp}"gnomAD.above.1perc.chr${x}*
- rm "${pathTmp}"id.deleterious.below.1perc.chr${x}*;  
+ rm "${pathTmp}"gnomad.01.to.1perc.chr${x}.*
+ rm "${pathTmp}"gnomAD.above.1perc.chr${x}.*
+ rm "${pathTmp}"id.deleterious.below.1perc.chr${x}.*;  
  done
  
 #now build the actual regenie inputs
