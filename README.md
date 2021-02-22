@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***February 18, 2021: Minor bugs found in the "sort | uniq" calls in steps 09 and 10. Now fixed.***
+***February 22, 2021: Minor bugs found in step 10, which didn't remove common some variants from the EAS populations. Now fixed.***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1Ouii904IqUArMECXHWynZjBiZ8QO-r2-3rsymB815Bo/edit
 
