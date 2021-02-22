@@ -5,14 +5,14 @@
 # Then if pipes it to another bcftools function to query only the information that is required. You can add more if needed.
 # The result of this list will be used for the exclusion list in the MAF<1% analysis
 
-bcftools view -R /path/to/exomePos.txt --min-ac 6:minor --min-af 0.01:minor \
+bcftools view --min-ac 6:minor --min-af 0.01:minor \
   /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz | \
   bcftools query -H -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\n' > common.one.perc.ExomeEur.txt
 
 # In the second part, it filters for MAF>0.1% AND MAC>=6
 # This will be used in the MAF<0.1% analysis
 
-bcftools view -R /path/to/exomePos.txt --min-ac 6:minor --min-af 0.001:minor \
+bcftools view --min-ac 6:minor --min-af 0.001:minor -Ou \
   /path/to/sequence.file.Eur.normID.GTflt.AB.noChrM.vcf.gz | \
   bcftools query -H -f '%CHROM\t%POS\t%ID\t%REF\t%ALT\n' > common.zero.one.perc.ExomeEur.txt
   
