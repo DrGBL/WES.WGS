@@ -91,7 +91,7 @@ for x in {1..22} X; do
    /gnomAD_AFR_AF=0\.00[1-9]|gnomAD_AFR_AF=0\.0[1-9]|gnomAD_AFR_AF=0\.[1-8][0-9][0-9]|gnomAD_AFR_AF=0\.9[0-8]|gnomAD_AFR_AF=0\.99[0-8]/ ||
    /gnomAD_AMR_AF=0\.00[1-9]|gnomAD_AMR_AF=0\.0[1-9]|gnomAD_AMR_AF=0\.[1-8][0-9][0-9]|gnomAD_AMR_AF=0\.9[0-8]|gnomAD_AMR_AF=0\.99[0-8]/ ||
    /gnomAD_ASJ_AF=0\.00[1-9]|gnomAD_ASJ_AF=0\.0[1-9]|gnomAD_ASJ_AF=0\.[1-8][0-9][0-9]|gnomAD_ASJ_AF=0\.9[0-8]|gnomAD_ASJ_AF=0\.99[0-8]/ ||
-   /gnomAD_EAS_AF=0\.00[1-9]|gnomAD_FIN_AF=0\.0[1-9]|gnomAD_FIN_AF=0\.[1-8][0-9][0-9]|gnomAD_FIN_AF=0\.9[0-8]|gnomAD_FIN_AF=0\.99[0-8]/ ||
+   /gnomAD_EAS_AF=0\.00[1-9]|gnomAD_EAS_AF=0\.0[1-9]|gnomAD_EAS_AF=0\.[1-8][0-9][0-9]|gnomAD_EAS_AF=0\.9[0-8]|gnomAD_EAS_AF=0\.99[0-8]/ ||
    /gnomAD_FIN_AF=0\.00[1-9]|gnomAD_FIN_AF=0\.0[1-9]|gnomAD_FIN_AF=0\.[1-8][0-9][0-9]|gnomAD_FIN_AF=0\.9[0-8]|gnomAD_FIN_AF=0\.99[0-8]/ ||
    /gnomAD_NFE_AF=0\.00[1-9]|gnomAD_NFE_AF=0\.0[1-9]|gnomAD_NFE_AF=0\.[1-8][0-9][0-9]|gnomAD_NFE_AF=0\.9[0-8]|gnomAD_NFE_AF=0\.99[0-8]/ ||
    /gnomAD_OTH_AF=0\.00[1-9]|gnomAD_OTH_AF=0\.0[1-9]|gnomAD_OTH_AF=0\.[1-8][0-9][0-9]|gnomAD_OTH_AF=0\.9[0-8]|gnomAD_OTH_AF=0\.99[0-8]/ ||
