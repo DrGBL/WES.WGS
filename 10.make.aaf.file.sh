@@ -59,7 +59,7 @@ for x in {1..22} X; do
  bcftools filter -i "%ID=@"${pathTmp}"deleterious.id.chr${x}.txt" \
    $pathSplit -Ou | \
    bcftools filter -i 'INFO/MAF>0.01' -Ou | \
-   bcftools query -f '%ID \n' | sort -u -k 1.6 | > "${pathTmp}"cohort.above.1perc.chr${x}.txt
+   bcftools query -f '%ID \n' | sort -u -k 1.6  > "${pathTmp}"cohort.above.1perc.chr${x}.txt
 
 # combine the locally common and gnomAD common (MAF>1%) variants in one file
  cat "${pathTmp}"gnomAD.above.1perc.chr${x}.txt "${pathTmp}"cohort.above.1perc.chr${x}.txt | \
