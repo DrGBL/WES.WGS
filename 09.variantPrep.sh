@@ -29,8 +29,8 @@ for x in {1..22} X; do
     uniq | \
     awk -f /project/richards/guillaume.butler-laporte/bin/transpose.awk | \
     tr -s '[:blank:]' ","|
-    awk 'BEGIN{FS=",";OFS=", "} { $1=$1; print $0 }' ; done | \
-    paste "${pathTmp}"canon.chr${x}.gene.txt - > "${pathTmp}"regenie.set.list.chr${x}.txt
+    awk 'BEGIN{FS=",";OFS=","} { $1=$1; print $0 }' ; done | \
+    paste -d'\0'  "${pathTmp}"canon.chr${x}.gene.txt -  > "${pathTmp}"regenie.set.list.chr${x}.txt
 
   rm "${pathTmp}"canon.chr${x}.*
 
@@ -164,6 +164,6 @@ done
 cat pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr* > "${pathReg}"regenie.anno.file.txt
 rm pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr*
 
-cat regenie.set.list.chr* > "${pathReg}"regenie.set.list.txt
-rm regenie.set.list.chr*
+cat "${pathTmp}"regenie.set.list.chr* > "${pathReg}"regenie.set.list.txt
+rm "${pathTmp}"regenie.set.list.chr*
 
