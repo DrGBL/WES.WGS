@@ -57,15 +57,39 @@ regenie \
   
   
   
-#with the pooled exclusion list (named exclusionList.txt below), to be given to the participating cohorts
+#with the pooled exclusion list (named grch38.maf.X.id.regenie.txt below), to be given to the participating cohorts
+#note that since two exclusion lists are done (one for MAF>1% and one for MAR>0.1%), we need to do this step twice.
+
+#for MAF>1%
 regenie \
   --step 2 \
-  --exclude-sets exclusionList.txt \
+  --exclude-sets grch38.maf.1.id.regenie.txt \
   --minMAC 1 \
   --covarFile $pathCov \
   --phenoFile $pathPheno \
   --bed $pathPlink \
   --aaf-bins 0.01,0.001 \
+  --build-mask 'max' \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
+  --bt \
+  --htp \
+  --firth --approx \
+  --pred "${pathOut}"step1AllPhenoLD_pred.list \
+  --bsize 200 \
+  --out "${pathOut}"burden.res.common
+  
+  #For MAF>0.1%
+  regenie \
+  --step 2 \
+  --exclude-sets grch38.maf.0.1.id.regenie.txt \
+  --minMAC 1 \
+  --covarFile $pathCov \
+  --phenoFile $pathPheno \
+  --bed $pathPlink \
+  --aaf-bins 0.001 \
   --build-mask 'max' \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
