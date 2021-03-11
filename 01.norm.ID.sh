@@ -4,6 +4,9 @@
 wget ftp://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/000/001/405/GCA_000001405.15_GRCh38/seqs_for_alignment_pipelines.ucsc_ids/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 gzip -d GCA_000001405.15_GRCh38_no_alt_analysis_set.fna.gz
 
+#if you use GRCh37, you can download here, and change the name appropriately below
+#wget ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_19/GRCh37.p13.genome.fa.gz
+
 #path to your vcf file
 pathVCF=/scratch/richards/guillaume.butler-laporte/WGS/rawVCF/allSamples.hc.011421.vqsr.flt.vcf.gz
 
