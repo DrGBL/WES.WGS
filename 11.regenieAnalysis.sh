@@ -61,13 +61,18 @@ regenie \
 #note that since two exclusion lists are done (one for MAF>1% and one for MAR>0.1%), we need to do this step twice.
 
 #for MAF>1%
+plink \
+  --bfile $pathPlink \
+  --exclude /scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/to.give.final/MAF.1.percent/for.use.with.grch38/grch38.maf.1.id.regenie.txt \
+  --make-bed \
+  --out ${pathPlink}.maf1perc
+
 regenie \
   --step 2 \
-  --exclude grch38.maf.1.id.regenie.txt \
   --minMAC 1 \
   --covarFile $pathCov \
   --phenoFile $pathPheno \
-  --bed $pathPlink \
+  --bed ${pathPlink}.maf1perc \
   --aaf-bins 0.01 \
   --build-mask 'max' \
   --mask-def "${pathReg}"regenie.mask.def.txt \
@@ -79,16 +84,21 @@ regenie \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
-  --out "${pathOut}"burden.res.common
+  --out "${pathOut}"burden.res.common.1.perc
   
-  #For MAF>0.1%
-  regenie \
+#For MAF>0.1%
+plink \
+  --bfile $pathPlink \
+  --exclude /scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/to.give.final/MAF.0.1.percent/for.use.with.grch38/grch38.maf.0.1.id.regenie.txt \
+  --make-bed \
+  --out ${pathPlink}.maf0.1perc
+
+regenie \
   --step 2 \
-  --exclude grch38.maf.0.1.id.regenie.txt \
   --minMAC 1 \
   --covarFile $pathCov \
   --phenoFile $pathPheno \
-  --bed $pathPlink \
+  --bed ${pathPlink}.maf0.1perc \
   --aaf-bins 0.001 \
   --build-mask 'max' \
   --mask-def "${pathReg}"regenie.mask.def.txt \
@@ -100,4 +110,5 @@ regenie \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
-  --out "${pathOut}"burden.res.common
+  --out "${pathOut}"burden.res.common.0.1.perc
+  
