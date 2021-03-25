@@ -18,6 +18,9 @@ pathReg=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/
 #path to regenie results folder
 pathOut=/scratch/richards/guillaume.butler-laporte/WGS/regenieRes/
 
+#name of your cohort
+name=name.of.your.cohort
+
 
 
 #step 1 is common to all
@@ -49,7 +52,7 @@ regenie \
   --anno-file "${pathReg}"regenie.anno.file.txt \
   --aaf-file "${pathReg}"regenie.aaf.file.txt \
   --bt \
-  --htp \
+  --htp $name \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
@@ -80,7 +83,7 @@ regenie \
   --anno-file "${pathReg}"regenie.anno.file.txt \
   --aaf-file "${pathReg}"regenie.aaf.file.txt \
   --bt \
-  --htp \
+  --htp $name \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
@@ -106,7 +109,7 @@ regenie \
   --anno-file "${pathReg}"regenie.anno.file.txt \
   --aaf-file "${pathReg}"regenie.aaf.file.txt \
   --bt \
-  --htp \
+  --htp $name \
   --firth --approx \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
