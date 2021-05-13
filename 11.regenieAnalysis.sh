@@ -54,9 +54,32 @@ regenie \
   --bt \
   --htp $name \
   --firth --approx \
+  --firth-se \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.gnomad
+  
+#recessive model with the local and gnomAD exclusion only
+regenie \
+  --step 2 \
+  --test recessive \
+  --minMAC 1 \
+  --covarFile $pathCov \
+  --phenoFile $pathPheno \
+  --bed $pathPlink \
+  --aaf-bins 0.01,0.001 \
+  --build-mask 'max' \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
+  --bt \
+  --htp $name \
+  --firth --approx \
+  --firth-se \
+  --pred "${pathOut}"step1AllPhenoLD_pred.list \
+  --bsize 200 \
+  --out "${pathOut}"burden.res.gnomad.recessive
   
   
   
@@ -85,9 +108,33 @@ regenie \
   --bt \
   --htp $name \
   --firth --approx \
+  --firth-se \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.common.1.perc
+  
+#recessive model
+
+regenie \
+  --step 2 \
+  --test recessive \
+  --minMAC 1 \
+  --covarFile $pathCov \
+  --phenoFile $pathPheno \
+  --bed ${pathPlink}.maf1perc \
+  --aaf-bins 0.01 \
+  --build-mask 'max' \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
+  --bt \
+  --htp $name \
+  --firth --approx \
+  --firth-se \
+  --pred "${pathOut}"step1AllPhenoLD_pred.list \
+  --bsize 200 \
+  --out "${pathOut}"burden.res.common.1.perc.recessive
   
 #For MAF>0.1%
 plink \
@@ -111,7 +158,31 @@ regenie \
   --bt \
   --htp $name \
   --firth --approx \
+  --firth-se \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.common.0.1.perc
+
+#recessive model
+
+regenie \
+  --step 2 \
+  --test recessive \
+  --minMAC 1 \
+  --covarFile $pathCov \
+  --phenoFile $pathPheno \
+  --bed ${pathPlink}.maf0.1perc \
+  --aaf-bins 0.001 \
+  --build-mask 'max' \
+  --mask-def "${pathReg}"regenie.mask.def.txt \
+  --set-list "${pathReg}"regenie.set.list.txt \
+  --anno-file "${pathReg}"regenie.anno.file.txt \
+  --aaf-file "${pathReg}"regenie.aaf.file.txt \
+  --bt \
+  --htp $name \
+  --firth --approx \
+  --firth-se \
+  --pred "${pathOut}"step1AllPhenoLD_pred.list \
+  --bsize 200 \
+  --out "${pathOut}"burden.res.common.0.1.perc.recessive
   
