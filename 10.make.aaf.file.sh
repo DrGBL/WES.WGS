@@ -125,8 +125,5 @@ for x in {1..22} X; do
  rm "${pathTmp}"gnomAD.above.1perc.chr${x}.*
  rm "${pathTmp}"id.deleterious.below.1perc.chr${x}.*;  
  done
- 
-#now build the actual regenie inputs
-cat above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc* > "${pathReg}"regenieInputs/regenie.aaf.file.txt
-rm above.1perc.chr* deleterious.below.0.1perc* deleterious.0.1.to.1perc*
+
  
