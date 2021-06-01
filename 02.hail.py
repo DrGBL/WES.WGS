@@ -1,6 +1,7 @@
 #this is a python script loosely based on Kumar and Konrad's effort here: https://github.com/mkveerapen/covid19_sequencing
 #again, some of the QC at our institution was done by our genome center, and therefore you should refer to the above link for more thorough QC
 #specifically, variant recalibration should still be done, even if not shown here, can discuss with me on how to do it using gatk.
+#however, the script implements some basic hard variant filtering (see line 42) in case
 
 import hail as hl
 import hail.expr.aggregators as agg
