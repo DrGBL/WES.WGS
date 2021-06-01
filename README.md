@@ -1,10 +1,10 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***February 22, 2021: Minor bugs found in step 10, which didn't remove common some variants from the EAS populations. Now fixed.***
+***June 1, 2021: Added hard filters and QC plots in the hail qc step (step2)***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1Ouii904IqUArMECXHWynZjBiZ8QO-r2-3rsymB815Bo/edit
 
-Note that all code is written assuming that the GRCh38 genome is used.
+Note that all code is written assuming that the GRCh38 genome is used. It also assumes that the initial input is a ***joint-called*** vcf file with all samples to be used for the analysis.
 
 Every effort was made to prioritize code clarity over efficiency, and there are multiple ways this code can be made more efficient e.g. using PBS arrays if your local computing cluster supports it.
 
