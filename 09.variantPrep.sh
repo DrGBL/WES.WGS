@@ -160,10 +160,3 @@ for x in {1..22} X; do
   rm "${pathTmp}"tmp/Missense.annot.chr${x}.*;
 done
 
-#now build the necessary regenie step 2 inputs
-cat pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr* > "${pathReg}"regenie.anno.file.txt
-rm pLoF.chr* moderate.non.missense.chr* missense.5in5.chr* missense.1in5.chr* missense.0in5.chr*
-
-cat "${pathTmp}"regenie.set.list.chr* > "${pathReg}"regenie.set.list.txt
-rm "${pathTmp}"regenie.set.list.chr*
-
