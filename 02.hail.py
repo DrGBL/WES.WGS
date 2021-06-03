@@ -39,7 +39,7 @@ mtAll = mtAll.filter_entries( (mtAll.GQ>=20) &
                  ((mtAll.GT.is_hom_ref() & (mtAll.AB <= 0.1)) |
                         (mtAll.GT.is_het() & (mtAll.AB >= 0.25) & (mtAll.AB <= 0.75)) |
                         (mtAll.GT.is_hom_var() & (mtAll.AB >= 0.9))))
-mtAll = mtAll.filter_rows((mtAll.variant_qc.gq_stats.mean > 10) & (mtAll.variant_qc.dp_stats.mean > 5) & (mtAll.variant_qc.call_rate > 0.8))
+mtAll = mtAll.filter_rows((mtAll.variant_qc.gq_stats.mean > 10) & (mtAll.variant_qc.dp_stats.mean > 5) & (mtAll.variant_qc.call_rate > 0.8)  & (mtAll.variant_qc.p_value_hwe>5e-8))
 mtAll.count()
              
 #plot different QC metrics
