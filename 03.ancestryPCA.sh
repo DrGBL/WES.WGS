@@ -69,7 +69,7 @@ done
 #Obtain the list of variants for ancestry inference PCA
 for chr in {1..22}; do
   bcftools view -r chr${chr} $pathQC | \
-  bcftools query -f "%ID\n" > /cohortSample/variants.chr${chr}.txt;
+  bcftools query -f "%ID\n" > cohortSample/variants.chr${chr}.txt;
 done
 
 
