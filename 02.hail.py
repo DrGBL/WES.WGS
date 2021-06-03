@@ -44,9 +44,11 @@ mtAll.count()
              
 #plot different QC metrics
 p_sample_call=hl.plot.histogram(mtAll.sample_qc.call_rate,legend='Sample Call Rate')
+p_sample_dp=hl.plot.histogram(mtAll.sample_qc.dp_stats.mean,legend='Sample Mean DP')
 p_variant_call=hl.plot.histogram(mtAll.variant_qc.call_rate,legend='Variant Call Rate')
 p_mean_variant_dp=hl.plot.histogram(mtAll.variant_qc.dp_stats.mean,legend='Sample Mean DP')
 export_png(p_sample_call, filename="/scratch/richards/guillaume.butler-laporte/tmpSort/p_sample_call.png")
+export_png(p_sample_dp, filename="/scratch/richards/guillaume.butler-laporte/tmpSort/p_sample_dp.png")
 export_png(p_variant_call, filename="/scratch/richards/guillaume.butler-laporte/tmpSort/p_variant_call.png")
 export_png(p_mean_variant_dp, filename="/scratch/richards/guillaume.butler-laporte/tmpSort/p_mean_variant_dp.png")
  
