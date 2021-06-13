@@ -32,7 +32,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 `07.finalAnnot.sh`: uses VEP to annotate variants. This requires the dbNSFP plugins.
 
-`08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
+`08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and recodes the X chromosome as diploid by assigning each participant a "female sex". This will be used in step 2 of regenie. Lastly, it removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
 `09.variantPrep.sh`: this uses VEP annotations to build the --set-list and --anno-file regenie step 2 inputs.
 
