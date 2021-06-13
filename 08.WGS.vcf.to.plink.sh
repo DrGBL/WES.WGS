@@ -14,7 +14,7 @@ pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.swedes.ex
 pathPlinkTmp=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.swedes.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt.tmp
 
 #path to FID IID and new sex (all female) file (input for plink)
-$allFemale=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/all_female.txt
+allFemale=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/all_female.txt
 
 #path to given ancestry QCed plink binary
 pathPlink=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.swedes.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt
