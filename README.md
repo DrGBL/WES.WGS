@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***June 1, 2021: Added hard filters and QC plots in the hail qc step (step2)***
+***June 12, 2021: Added hard filters and QC plots in the hail qc step (step2), and updated step 8 to recode the X chromosome as diploid (i.e. 0/2 for males) by making all participants "females" in plink.***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1Ouii904IqUArMECXHWynZjBiZ8QO-r2-3rsymB815Bo/edit
 
