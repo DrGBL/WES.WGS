@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***June 12, 2021: Added hard filters and QC plots in the hail qc step (step2), and updated step 8 to recode the X chromosome as diploid (i.e. 0/2 for males) by making all participants "females" in plink.***
+***June 1, 2021: Added hard filters and QC plots in the hail qc step (step2).***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1Ouii904IqUArMECXHWynZjBiZ8QO-r2-3rsymB815Bo/edit
 
@@ -32,7 +32,7 @@ Here's a summary of what each function does, with more comments in each specific
 
 `07.finalAnnot.sh`: uses VEP to annotate variants. This requires the dbNSFP plugins.
 
-`08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format, and recodes the X chromosome as diploid by assigning each participant a "female sex". This will be used in step 2 of regenie. Lastly, it removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
+`08.WGS.vcf.to.plink.sh`: this transforms the full VCF file in plink format. This will be used in step 2 of regenie. Lastly, it removes the rare variants. This will be used for step 1 of regenie (which does not use Firth regression)
 
 `09.variantPrep.sh`: this uses VEP annotations to build the --set-list and --anno-file regenie step 2 inputs.
 
