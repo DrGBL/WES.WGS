@@ -29,7 +29,7 @@ plink --vcf $pathAncestry  \
 
 awk '{print $1, $2, "2"}' $pathPlinkTmp.fam > $allFemale  
 
-plink --bfile $pathPlink \
+plink --bfile $pathPlinkTmp \
   --update-sex $allFemale \
   --make-bed \
   --out $pathPlink
