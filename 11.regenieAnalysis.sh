@@ -38,51 +38,6 @@ regenie \
   --out "${pathOut}"step1AllPhenoLD
 
 
-#with the local and gnomAD exclusion only
-regenie \
-  --step 2 \
-  --minMAC 1 \
-  --covarFile $pathCov \
-  --phenoFile $pathPheno \
-  --bed $pathPlink \
-  --aaf-bins 0.01,0.001 \
-  --build-mask 'max' \
-  --mask-def "${pathReg}"regenie.mask.def.txt \
-  --set-list "${pathReg}"regenie.set.list.txt \
-  --anno-file "${pathReg}"regenie.anno.file.txt \
-  --aaf-file "${pathReg}"regenie.aaf.file.txt \
-  --bt \
-  --htp $name \
-  --firth --approx \
-  --firth-se \
-  --pred "${pathOut}"step1AllPhenoLD_pred.list \
-  --bsize 200 \
-  --out "${pathOut}"burden.res.gnomad
-  
-#recessive model with the local and gnomAD exclusion only
-regenie \
-  --step 2 \
-  --test recessive \
-  --minMAC 1 \
-  --covarFile $pathCov \
-  --phenoFile $pathPheno \
-  --bed $pathPlink \
-  --aaf-bins 0.01,0.001 \
-  --build-mask 'max' \
-  --mask-def "${pathReg}"regenie.mask.def.txt \
-  --set-list "${pathReg}"regenie.set.list.txt \
-  --anno-file "${pathReg}"regenie.anno.file.txt \
-  --aaf-file "${pathReg}"regenie.aaf.file.txt \
-  --bt \
-  --htp $name \
-  --firth --approx \
-  --firth-se \
-  --pred "${pathOut}"step1AllPhenoLD_pred.list \
-  --bsize 200 \
-  --out "${pathOut}"burden.res.gnomad.recessive
-  
-  
-  
 #with the pooled exclusion list (named grch38.maf.X.id.regenie.txt below), to be given to the participating cohorts
 #note that since two exclusion lists are done (one for MAF>1% and one for MAR>0.1%), we need to do this step twice.
 
@@ -101,6 +56,7 @@ regenie \
   --bed ${pathPlink}.maf1perc \
   --aaf-bins 0.01 \
   --build-mask 'max' \
+  --write-mask \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
   --anno-file "${pathReg}"regenie.anno.file.txt \
@@ -124,6 +80,7 @@ regenie \
   --bed ${pathPlink}.maf1perc \
   --aaf-bins 0.01 \
   --build-mask 'max' \
+  --write-mask \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
   --anno-file "${pathReg}"regenie.anno.file.txt \
@@ -151,6 +108,7 @@ regenie \
   --bed ${pathPlink}.maf0.1perc \
   --aaf-bins 0.001 \
   --build-mask 'max' \
+  --write-mask \
   --mask-def "${pathReg}"regenie.mask.def.txt \
   --set-list "${pathReg}"regenie.set.list.txt \
   --anno-file "${pathReg}"regenie.anno.file.txt \
@@ -163,26 +121,4 @@ regenie \
   --bsize 200 \
   --out "${pathOut}"burden.res.common.0.1.perc
 
-#recessive model
-
-regenie \
-  --step 2 \
-  --test recessive \
-  --minMAC 1 \
-  --covarFile $pathCov \
-  --phenoFile $pathPheno \
-  --bed ${pathPlink}.maf0.1perc \
-  --aaf-bins 0.001 \
-  --build-mask 'max' \
-  --mask-def "${pathReg}"regenie.mask.def.txt \
-  --set-list "${pathReg}"regenie.set.list.txt \
-  --anno-file "${pathReg}"regenie.anno.file.txt \
-  --aaf-file "${pathReg}"regenie.aaf.file.txt \
-  --bt \
-  --htp $name \
-  --firth --approx \
-  --firth-se \
-  --pred "${pathOut}"step1AllPhenoLD_pred.list \
-  --bsize 200 \
-  --out "${pathOut}"burden.res.common.0.1.perc.recessive
-  
+#recessive model not done for MAF<0.1%
