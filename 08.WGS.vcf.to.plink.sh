@@ -6,13 +6,13 @@
 #paths
 
 #path to given ancestry QCed vcf
-pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.swedes.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
+pathAncestry=/scratch/richards/guillaume.butler-laporte/WGS/allSamples.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt.vcf.gz
 
 #path to given ancestry QCed plink binary
-pathPlink=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.swedes.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt
+pathPlink=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt
 
 #path to pruned variants
-pathPruned=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.swedes.exome.regenie.LD.prune.maf0.01.geno0.1.Eur.normID.GTflt.AB.noChrM.vqsr.flt
+pathPruned=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.exome.regenie.LD.prune.maf0.01.geno0.1.Eur.normID.GTflt.AB.noChrM.vqsr.flt
 
 
 plink --vcf $pathAncestry  \
