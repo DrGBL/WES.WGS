@@ -2,7 +2,7 @@
 
 ***June 1, 2021: Added hard filters and QC plots in the hail qc step (step2).***
 
-This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v5) can be found here: https://docs.google.com/document/d/1QrwktjejSH7A1Srzdkyfg4gJi8u4HAFrXPn8XrdX7wo/edit?usp=sharing
+This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v6) can be found here: https://docs.google.com/document/d/1QrwktjejSH7A1Srzdkyfg4gJi8u4HAFrXPn8XrdX7wo/edit?usp=sharing
 
 Note that all code is written assuming that the GRCh38 genome is used. It also assumes that the initial input is a ***joint-called*** vcf file with all samples to be used for the analysis.
 
