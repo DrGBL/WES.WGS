@@ -30,6 +30,8 @@ regenie \
   --extract "${pathPruned}".prune.in \
   --bsize 1000 \
   --out "${pathOut}"BQC19.hc.080921.eur.step1.single_variant
+ 
+#step 2
 
 regenie \
   --step 2 \
