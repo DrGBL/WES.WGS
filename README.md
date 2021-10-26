@@ -40,4 +40,6 @@ Here's a summary of what each function does, with more comments in each specific
 
 `11.regenieAnalysis.sh`: this is where we use regenie to perform the burden tests.
 
+`12.regenieAnalysis_single_variant.sh`: this is where we do the single variant analysis ***without the rare variant PCs***
+
 `transpose.awk`: a vector transpose function, useful in steps 09 and 10.
