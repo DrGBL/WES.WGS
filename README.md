@@ -1,6 +1,6 @@
 # Covid-19 HGI WES/WGS burden test BQC-19 pipeline
 
-***June 1, 2021: Added hard filters and QC plots in the hail qc step (step2).***
+***October 25, 2021: Added step 12, the code for single variant analysis (to be done without rare variant PCs!)***
 
 This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v6) can be found here: https://docs.google.com/document/d/1QrwktjejSH7A1Srzdkyfg4gJi8u4HAFrXPn8XrdX7wo/edit?usp=sharing
 
@@ -40,6 +40,6 @@ Here's a summary of what each function does, with more comments in each specific
 
 `11.regenieAnalysis.sh`: this is where we use regenie to perform the burden tests.
 
-`12.regenieAnalysis_single_variant.sh`: this is where we do the single variant analysis ***without the rare variant PCs***
+`12.regenieAnalysis_single_variants.sh`: this is where we do the single variant analysis ***without the rare variant PCs***
 
 `transpose.awk`: a vector transpose function, useful in steps 09 and 10.
