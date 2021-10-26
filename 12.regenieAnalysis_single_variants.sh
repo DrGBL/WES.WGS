@@ -2,9 +2,9 @@
 
 #path to QCed plink binaries
 pathPlink=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/allSamples.Eur.normID.GTflt.AB.noChrM.vqsr.flt
-#path to covariates file
-pathCov=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/covar.txt
-#path to phenotype file
+#path to covariates file (same as for burden test, but without the rare variant PCs)
+pathCov=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/covar_single_variants.txt
+#path to phenotype file (same as for burden test)
 pathPheno=/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/pheno.txt
 #path to regenie tmp folder
 pathTmpReg=/scratch/richards/guillaume.butler-laporte/WGS/regenieRes/tmp/
@@ -17,7 +17,7 @@ pathOut=/scratch/richards/guillaume.butler-laporte/WGS/regenieRes/
 name=name.of.your.cohort
 
 
-#step 1 can be the same as the one from the burden test (see step 11), but just in case, I've put it here too.
+#step 1
 
 regenie \
   --step 1 \
