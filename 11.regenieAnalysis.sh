@@ -68,31 +68,7 @@ regenie \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.common.1.perc
-  
-#recessive model
-
-regenie \
-  --step 2 \
-  --test recessive \
-  --minMAC 1 \
-  --covarFile $pathCov \
-  --phenoFile $pathPheno \
-  --bed ${pathPlink}.maf1perc \
-  --aaf-bins 0.01 \
-  --build-mask 'max' \
-  --write-mask \
-  --mask-def "${pathReg}"regenie.mask.def.txt \
-  --set-list "${pathReg}"regenie.set.list.txt \
-  --anno-file "${pathReg}"regenie.anno.file.txt \
-  --aaf-file "${pathReg}"regenie.aaf.file.txt \
-  --bt \
-  --htp $name \
-  --firth --approx \
-  --firth-se \
-  --pred "${pathOut}"step1AllPhenoLD_pred.list \
-  --bsize 200 \
-  --out "${pathOut}"burden.res.common.1.perc.recessive
-  
+ 
 #For MAF>0.1%
 plink \
   --bfile $pathPlink \
@@ -120,5 +96,3 @@ regenie \
   --pred "${pathOut}"step1AllPhenoLD_pred.list \
   --bsize 200 \
   --out "${pathOut}"burden.res.common.0.1.perc
-
-#recessive model not done for MAF<0.1%
