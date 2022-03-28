@@ -1,8 +1,6 @@
-# Covid-19 HGI WES/WGS burden test BQC-19 pipeline
+# Covid-19 HGI WES/WGS burden test BQC-19 pipeline guidance
 
-***October 25, 2021: Added step 12, the code for single variant analysis (to be done without rare variant PCs!)***
-
-This is code made available to other members of the consortium, in an effort to help with their local pipelines. The full analysis protocol (v6) can be found here: https://docs.google.com/document/d/1QrwktjejSH7A1Srzdkyfg4gJi8u4HAFrXPn8XrdX7wo/edit?usp=sharing
+This is code made available to other members of the consortium, in an effort to help with their local pipelines.
 
 Note that all code is written assuming that the GRCh38 genome is used. It also assumes that the initial input is a ***joint-called*** vcf file with all samples to be used for the analysis.
 
