@@ -10,7 +10,7 @@ The code was heavily inspired by the one provided by the COVID-19 Host Genetics 
 
 Here's a summary of each file:
 
-Files `grch3X_freq.tsv`, `grch3X_loading.tsv`, and `1000G_snps_scores.txt.gz` are reference files obtained from the exonic regions of the 1000G reference panel. They include around 25,000 variants pruned for LD and with high allele frequency (MAF>10% in the 1000G panel). These files are used in the two steps below. Please use the one corresponding to your reference genome (grch37 or 38). ***The variants were names using the following convention: chrN:pos:ref:alt i.e. each variant is contained in both grch37 and grch38 files, but with different variant IDs. For the functions to work, the variants in your plink files (in step 01) must be names the same way, otherwise you will need to rename either your variants, or the files here.***
+Files `grch3X_freq.tsv`, `grch3X_loading.tsv`, and `1000G_snps_scores.txt.gz` are reference files obtained from the exonic regions of the 1000G reference panel. They include around 25,000 variants pruned for LD and with high allele frequency (MAF>10% in the 1000G panel). These files are used in the two steps below. Please use the one corresponding to your reference genome (grch37 or 38). ***The variants were named using the following convention: chrN:pos:ref:alt i.e. each variant is contained in both grch37 and grch38 files, but with different variant IDs. For the functions to work, the variants in your plink files (in step 01) must be names the same way, otherwise you will need to rename either your variants, or the files here.***
 
 `01.variant_scoring.sh`: this scores each variant and adds up their contribution to each principal components. The file that ends in sscore will be used for step 2.
 
