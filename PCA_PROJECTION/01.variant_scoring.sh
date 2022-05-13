@@ -5,22 +5,22 @@ set -eu
 # Please fill in the below variables
 ################################################################################
 # Metadata
-STUDY_NAME="BQC-19-Sweden"
-ANALYST_LAST_NAME="Butler-Laporte"
+STUDY_NAME="your cohort name"
+ANALYST_LAST_NAME="" #your name
 DATE="$(date +'%Y%m%d')"
-OUTNAME=/project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/PC_PROJECTION_REVIEWS/results/"${STUDY_NAME}.${ANALYST_LAST_NAME}.${DATE}"
+OUTNAME=/path/to/results/folder/"${STUDY_NAME}.${ANALYST_LAST_NAME}.${DATE}"
 ################################################################################
 # Location of downloaded input files
-PCA_LOADINGS="/project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/PC_PROJECTION_REVIEWS/loadings_freq/grch38_loading.tsv"
-PCA_AF="/project/richards/guillaume.butler-laporte/WGS/bqc.individual.wgs.20200908/finalScripts/PC_PROJECTION_REVIEWS/loadings_freq/grch38_freq.tsv"
+PCA_LOADINGS="" #either grch38_loading.tsv or grch37_loading.tsv, depending on your reference genome
+PCA_AF="" #either grch38_freq.tsv or grch37_freq.tsv, depending on your reference genome
 ################################################################################
-# Location of imputed genotype files
+# Location of your plink file. Can use the results of $pathPlink in 08.WGS.vcf.to.plink.sh
 # [Recommended]
 # PLINK 2 binary format: a prefix (with directories) of .pgen/.pvar/.psam files
 PFILE=""
 # [Acceptable]
 # PLINK 1 binary format: a prefix of .bed/.bim/.fam files
-BFILE="/scratch/richards/guillaume.butler-laporte/WGS/regenieInputs/BQC19.hc.080921.swedes.exome.Eur.normID.GTflt.AB.noChrM.vqsr.flt"
+BFILE=""
 ################################################################################
 
 function error_exit() {
