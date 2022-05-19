@@ -15,10 +15,6 @@ PCA_LOADINGS="" #either grch38_loading.tsv or grch37_loading.tsv, depending on y
 PCA_AF="" #either grch38_freq.tsv or grch37_freq.tsv, depending on your reference genome
 ################################################################################
 # Location of your plink file. Can use the results of $pathPlink in 08.WGS.vcf.to.plink.sh
-# [Recommended]
-# PLINK 2 binary format: a prefix (with directories) of .pgen/.pvar/.psam files
-PFILE=""
-# [Acceptable]
 # PLINK 1 binary format: a prefix of .bed/.bim/.fam files
 BFILE=""
 ################################################################################
