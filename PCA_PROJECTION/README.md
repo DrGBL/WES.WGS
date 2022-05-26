@@ -24,7 +24,7 @@ A docker image for the R component of the code is available for easier control o
 docker pull monsieurbl/pc_proj_r
 ```
 
-Then run the following in the directory which contains the expected inputs for part 2 `02.pca_projection.sh`.
+Then run the following in the directory which contains the expected inputs for `02.pca_projection.sh`.
 ```
 docker run -ti --rm -v `pwd`:`pwd` -w `pwd` monsieurbl/pc_proj_r bash
 ```
