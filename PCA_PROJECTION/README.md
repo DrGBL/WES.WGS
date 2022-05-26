@@ -1,6 +1,6 @@
 # PCA_PROJECTION
 
-*** Addendum: I created a docker image for the R part of the analysis, since it was causing problems with version and dependencies, see at the end (before the example), for details. ***
+***Addendum: I created a docker image for the R part of the analysis, since it was causing problems with version and dependencies, see at the end (before the example), for details.***
 
 This code will allow all cohorts in the consortium to project their participant's exome on the same reference panel, using the same variant loadings. That is, it'll make our principal components comparable. As usual file paths need to be adjusted.
 
@@ -18,9 +18,11 @@ Files `grch3X_freq.tsv`, `grch3X_loading.tsv`, and `1000G_snps_scores.txt.gz` ar
 
 `02.pca_projection.sh`: this calls the `plot_projected_pc.R` R script, which plots the principal components obtained above in the same space as the 1000G reference panel. This outputs both png files and rds objects. Please use the part that applies to the number of ancestries in your cohort (and adjust phenotype accordingly).
 
-
-
-
+## Docker image
+A docker image for the R component of the code is available for ease.
+```
+docker pull monsieurbl/pc_proj_r
+```
 
 ## Example with 1000G:
 In the end, the resulting file ending with PC1-10.png should overlap with the principal component plots below, which were obtained with the same variant loadings and code as provided here, but using participants from the 1000G reference panel (simply disregard the "cases" and "controls" in the legend, they aren't plotted here). ***There might be differences in your results and the example below due to varying number of variants that will be used, these will cause the scales to be a bit different. I'll fix this in the final combined plots.***
