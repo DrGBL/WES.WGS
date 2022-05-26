@@ -19,7 +19,7 @@ Files `grch3X_freq.tsv`, `grch3X_loading.tsv`, and `1000G_snps_scores.txt.gz` ar
 `02.pca_projection.sh`: this calls the `plot_projected_pc.R` R script, which plots the principal components obtained above in the same space as the 1000G reference panel. This outputs both png files and rds objects. Please use the part that applies to the number of ancestries in your cohort (and adjust phenotype accordingly).
 
 ## Docker image
-A docker image for the R component of the code is available for ease. This also contains the reference files in the `loadings_freq/` folder. To pull the docker image simply run the following:
+A docker image for the R component of the code is available for easier control of dependencies. To pull the docker image simply run the following:
 ```
 docker pull monsieurbl/pc_proj_r
 ```
