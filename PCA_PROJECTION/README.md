@@ -28,7 +28,18 @@ Then run the following in the directory which contains the expected inputs for `
 ```
 docker run -ti --rm -v `pwd`:`pwd` -w `pwd` monsieurbl/pc_proj_r bash
 ```
-And you will be able to directly run the correct Rscript from `02.pca_projection.sh` afterwards. For ease, I have added the reference file (`ref_score`) and the R script (`plot_projected_pc.R`) in the image. Once you run the command above (`docker run`), you can refer to these as `/app/loadings_freq/1000G_snps_scores.txt.gz` `/app/plot_projected_pc.R`, respectively.
+And you will be able to directly run the correct Rscript from `02.pca_projection.sh` afterwards. For ease, I have added the reference file (`ref_score`) and the R script (`plot_projected_pc.R`) in the image. Once you run the command above (`docker run`), you can refer to these as `/app/loadings_freq/1000G_snps_scores.txt.gz` and `/app/plot_projected_pc.R`, respectively. Hence you would run the following script (example for one ancestry only):
+```
+Rscript /app/plot_projected_pc.R \
+  --sscore ${sscore_file} \
+  --phenotype-file ${pheno_file} \
+  --phenotype-col ${pheno_col} \
+  --ancestry ${anc} \
+  --plot-pc-num 10 \
+  --study ${study_name} \
+  --reference-score-file /app/loadings_freq/1000G_snps_scores.txt.gz \
+  --out ${path_out}/${study_name}_${pheno_col}_projection
+```
 
 ## Example with 1000G:
 In the end, the resulting file ending with PC1-10.png should overlap with the principal component plots below, which were obtained with the same variant loadings and code as provided here, but using participants from the 1000G reference panel (simply disregard the "cases" and "controls" in the legend, they aren't plotted here). ***There might be differences in your results and the example below due to varying number of variants that will be used, these will cause the scales to be a bit different. I'll fix this in the final combined plots.***
