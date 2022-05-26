@@ -28,7 +28,7 @@ Then run the following in your the directory which contains the expected inputs 
 ```
 docker run -ti --rm -v `pwd`:`pwd` -w `pwd` monsieurbl/pc_proj_r bash
 ```
-And you will be able to directly run the correct Rscript comment from `02.pca_projection.sh` afterwards.
+And you will be able to directly run the correct Rscript from `02.pca_projection.sh` afterwards.
 
 ## Example with 1000G:
 In the end, the resulting file ending with PC1-10.png should overlap with the principal component plots below, which were obtained with the same variant loadings and code as provided here, but using participants from the 1000G reference panel (simply disregard the "cases" and "controls" in the legend, they aren't plotted here). ***There might be differences in your results and the example below due to varying number of variants that will be used, these will cause the scales to be a bit different. I'll fix this in the final combined plots.***
